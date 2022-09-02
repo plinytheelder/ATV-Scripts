@@ -3,7 +3,6 @@
 
 CONFIGFILE='/data/local/tmp/emagisk.config'
 logfile='/data/local/tmp/emagisk.log'
-reboottype=$1
 
 #Configs
 atlas_conf="/data/local/tmp/atlas_config.json"
