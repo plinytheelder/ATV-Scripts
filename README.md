@@ -13,3 +13,5 @@ Code is sourced heavily from other users and the Google. The contents in this re
 - Use `./emagisk.sh DEVICEIP:DEVICEPORT` to install eMagisk on your device. Or do `./emagiskall.sh` to install it across all your devices that you found by running `devicelist.py`.
 
 - Use `./install.sh` to install/update Atlas and PoGo on all your devices. It currently assumes you have a folder named `apks` and filenames of `atlas`, `pogo32`, and `pogo64`. Feel free to adjust accordingly.
+
+- Use `./hostname.sh DEVICEIP:DEVICEPORT` to change your device's hostname. I don't know about you, but the hostname of my devices would reset to `atvx` after every reboot. It drove me crazy trying to figure out which device was which when looking at my network stats, so I added this script. Can also run `./hostnameall.sh` to add it to all your devices found from `devicelist.py`
