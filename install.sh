@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 while IFS== read device name;do
     adb connect $device
     type=$(adb -s $device shell uname -m)
