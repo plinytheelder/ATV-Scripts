@@ -50,8 +50,8 @@ while true
     cpuPogoPct=$(dumpsys cpuinfo | grep 'com.nianticlabs.pokemongo' | awk '{print substr($1, 1, length($1)-1)}')
     cpuApct=$(dumpsys cpuinfo | grep 'com.pokemod.atlas' | awk '{print substr($1, 1, length($1)-1)}')
     numPogo=$(ls -l /sbin/.magisk/mirror/data/app/ | grep com.nianticlabs.pokemongo | wc -l)
-    avj=$(tail -n 1 /data/local/tmp/atlas.log | grep "avj:" | sed 's/.*avj://' | cut -d 's' -f1)
-    cur=$(tail -n 1 /data/local/tmp/atlas.log | grep "cur:" | sed 's/.*cur://' | cut -d 's' -f1)
+    avj=$(tac /data/local/tmp/atlas.log | grep -m1 "avj:" | sed 's/.*avj://' | cut -d 's' -f1)
+    cur=$(tac /data/local/tmp/atlas.log | grep -m1 "cur:" | sed 's/.*cur://' | cut -d 's' -f1)
 # atlas config
     authBearer=$(cat $atlas_conf | tr , '\n' | grep -w 'authBearer' | awk -F ":" '{ print $2 }' | tr -d \"})
     token=$(cat $atlas_conf | tr , '\n' | grep -w 'deviceAuthToken' | awk -F ":" '{ print $2 }' | tr -d \"})
