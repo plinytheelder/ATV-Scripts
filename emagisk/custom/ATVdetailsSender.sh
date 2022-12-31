@@ -7,7 +7,6 @@ logfile='/data/local/tmp/emagisk.log'
 #Configs
 atlas_conf="/data/local/tmp/atlas_config.json"
 atlas_log="/data/local/tmp/atlas.log"
-aconf_log="/sdcard/aconf.log"
 
 source $CONFIGFILE
 export useSender atvdetails_interval atvdetails_receiver_host atvdetails_receiver_port
