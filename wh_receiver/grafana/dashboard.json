@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_MYSQL",
-      "label": "MySQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "mysql",
-      "pluginName": "MySQL"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "9.1.1"
-    },
-    {
-      "type": "datasource",
-      "id": "mysql",
-      "name": "MySQL",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -55,14 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 5,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -71,7 +40,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false,
             "minWidth": 50
@@ -158,8 +129,10 @@
                 "value": 74
               },
               {
-                "id": "custom.displayMode",
-                "value": "json-view"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "json-view"
+                }
               }
             ]
           },
@@ -210,8 +183,10 @@
                 "value": 94
               },
               {
-                "id": "custom.displayMode",
-                "value": "json-view"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "json-view"
+                }
               }
             ]
           },
@@ -357,6 +332,7 @@
       "id": 2,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -367,12 +343,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -406,7 +382,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -415,7 +391,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -441,6 +419,7 @@
       "id": 32,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -450,12 +429,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -489,7 +468,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -498,7 +477,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -529,8 +510,10 @@
                 "value": 89
               },
               {
-                "id": "custom.displayMode",
-                "value": "json-view"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "json-view"
+                }
               }
             ]
           },
@@ -617,6 +600,7 @@
       "id": 8,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -626,12 +610,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -665,7 +649,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -674,7 +658,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1099,6 +1085,7 @@
       "id": 25,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1108,12 +1095,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1147,7 +1134,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1156,7 +1143,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1220,6 +1209,7 @@
       "id": 22,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1234,12 +1224,12 @@
           }
         ]
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1273,7 +1263,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1282,7 +1272,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1372,6 +1364,7 @@
       "id": 23,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1386,12 +1379,12 @@
           }
         ]
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1425,7 +1418,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1434,7 +1427,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1513,6 +1508,7 @@
       "id": 27,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1522,12 +1518,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1561,7 +1557,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1570,7 +1566,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1579,7 +1577,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -1595,6 +1594,7 @@
       "id": 26,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1604,12 +1604,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1643,7 +1643,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1652,7 +1652,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1661,7 +1663,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1730,6 +1733,7 @@
       "id": 24,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1739,12 +1743,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1778,7 +1782,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1787,7 +1791,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1796,7 +1802,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -1812,6 +1819,7 @@
       "id": 30,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1821,12 +1829,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.1.1",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1860,7 +1868,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1869,7 +1877,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1908,7 +1918,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -1942,7 +1952,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -1951,7 +1961,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -1990,7 +2002,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -2024,7 +2036,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "${DS_MYSQL}"
+        "uid": "jxa3CkaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -2033,7 +2045,9 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -2072,7 +2086,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "${DS_MYSQL}"
+            "uid": "jxa3CkaVz"
           },
           "format": "table",
           "group": [],
@@ -2104,8 +2118,9 @@
       "type": "table"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 37,
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2133,6 +2148,6 @@
   "timezone": "",
   "title": "Device Dashboard",
   "uid": "YBmfNzFGz",
-  "version": 39,
+  "version": 1,
   "weekStart": ""
 }
