@@ -124,39 +124,6 @@ def webhook():
         if 'RPL' in request.json:
             RPL = validate_string(request.json["RPL"]) 
         else: RPL = None
-        if 'memTot' in request.json:
-            memTot = validate_string(request.json["memTot"]) 
-        else: memTot = None
-        if 'memFree' in request.json:
-            memFree = validate_string(request.json["memFree"]) 
-        else: memFree = None
-        if 'memAv' in request.json:
-            memAv = validate_string(request.json["memAv"]) 
-        else: memAv = None
-        if 'memPogo' in request.json:
-            memPogo = validate_string(request.json["memPogo"]) 
-        else: memPogo = None
-        if 'memAtlas' in request.json:
-            memAtlas = validate_string(request.json["memAtlas"]) 
-        else: memAtlas = None
-        if 'cpuL5' in request.json:
-            cpuL5 = validate_string(request.json["cpuL5"]) 
-        else: cpuL5 = None
-        if 'cpuL10' in request.json:
-            cpuL10 = validate_string(request.json["cpuL10"]) 
-        else: cpuL10 = None
-        if 'cpuL15' in request.json:
-            cpuL15 = validate_string(request.json["cpuL15"]) 
-        else: cpuL15 = None
-        if 'cpuPogoPct' in request.json:
-            cpuPogoPct = validate_string(request.json["cpuPogoPct"]) 
-            if cpuPogoPct == '': 
-                cpuPogoPct = None
-        else: cpuPogoPct = None
-        if 'cpuApct' in request.json:
-            cpuApct = validate_string(request.json["cpuApct"]) 
-            if cpuApct == '': 
-                cpuApct = None
         if 'authBearer' in request.json:
             authBearer = validate_string(request.json["authBearer"]) 
         else: authBearer = None
@@ -172,12 +139,6 @@ def webhook():
         if 'onBoot' in request.json:
             onBoot = validate_string(request.json["onBoot"]) 
         else: onBoot = None
-        if 'avj' in request.json:
-            avj = validate_string(request.json["avj"]) 
-        else: avj = None
-        if 'cur' in request.json:
-            cur = validate_string(request.json["cur"]) 
-        else: cur = None
         
         insert_stmt1 = "\
             INSERT INTO ATVsummary \
@@ -222,11 +183,11 @@ def webhook():
         data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(pogo), str(atlas), str(temperature), str(magisk), str(macw), str(mace), str(ip), str(ext_ip), str(hostname), str(authBearer), str(token), str(email), str(rdmUrl), str(onBoot) )
 
         insert_stmt2 = (
-            "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature, memTot, memFree, memAv, memPogo, memAtlas, cpuL5, cpuL10, cpuL15, cpuPogoPct, cpuApct, cur, avj)"
-            "VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature)"
+            "VALUES ( %s, %s, %s, %s)"
         )        
         
-        data2 = (str(timestamp), str(RPL), str(deviceName), str(temperature), str(memTot), str(memFree), str(memAv), str(memPogo), str(memAtlas), str(cpuL5), str(cpuL10), str(cpuL15), str(cpuPogoPct), str(cpuApct), str(cur), str(avj) )
+        data2 = (str(timestamp), str(RPL), str(deviceName), str(temperature) )
 
         try:
             connection_object = connection_pool.get_connection()
