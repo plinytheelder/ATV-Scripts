@@ -33,14 +33,14 @@ Should probably put it somewhere it can be accessed, I put it in `/var/www/devic
 
 3. Need to add a reverse proxy so file can be reached? Something as easy as this works:
 
-`server {
+```server {
     listen 9123;
     server_name  127.0.0.1;
 
         location / {
         alias /var/www/devices/;
     }
-}`
+}```
 
 4. Change `rdm_backendURL` in emagisk config to the file location, so like `http://127.0.0.1:9123/devicestatus.json`
 
