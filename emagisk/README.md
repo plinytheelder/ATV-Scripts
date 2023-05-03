@@ -21,11 +21,11 @@ Note: step 3 only works on Magisk versions 21.2 and forward. If you have an earl
 
 To prevent eMagisk from hammering RDM with logins, do this:
 
-1. Create a script that pulls device status logs. Like this:
+1. Create a script that pulls device status logs. So a `devicestatus.sh` file that looks like this:
 
 `curl -s -k -u user:password "http://rdmurl/api/get_data?show_devices=true&formatted=true" -o devicestatus.json`
 
-Should probably put it somewhere it can be accessed, I put it in `/var/www/devices`. Then make it executable `sudo chmod +x devicestatus.json`.
+Should probably put it somewhere it can be accessed, I put it in `/var/www/devices`. Then make it executable `sudo chmod +x devicestatus.sh`.
 
 2. Cron it every minute
 
