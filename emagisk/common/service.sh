@@ -8,7 +8,7 @@ MODDIR=${0%/*}
 
 logfile=/data/local/tmp/emagisk.log
 log() {
-    echo "$(date -u +"%Y-%m-%d %H:%M:%S") eMagisk | ${*}" >>$logfile
+    echo "$(date +"%Y-%m-%d %H:%M:%S") eMagisk | ${*}" >>$logfile
     /system/bin/log -t eMagisk -p i "${@}"
 }
 
