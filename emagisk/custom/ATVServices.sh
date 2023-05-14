@@ -169,14 +169,14 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" ]; then
             log "Started health check!"
             atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | awk -F\" '{print $12}')
             rdmData=$(curl -s -k "$rdm_backendURL")
-            rdmDeviceInfo=$(echo $rdmData  | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
-            rdmDeviceName=$(echo $rdmData | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Fuuid\"\:\" '{print $2}' | awk -F\" '{print $1}')
+            rdmDeviceInfo=$(curl -s -k "$rdm_backendURL"  | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
+            rdmDeviceName=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Fuuid\"\:\" '{print $2}' | awk -F\" '{print $1}')
 
                 until [[ $rdmDeviceName = $atlasDeviceName ]]
                 do
                         $((rdmDeviceID++))
-                        rdmDeviceInfo=$(echo $rdmData | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
-                        rdmDeviceName=$(echo $rdmData | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Fuuid\"\:\" '{print $2}' | awk -F\" '{print $1}')
+                        rdmDeviceInfo=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
+                        rdmDeviceName=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Fuuid\"\:\" '{print $2}' | awk -F\" '{print $1}')
 
                         if [[ -z $rdmDeviceInfo ]]; then
                     log "Probably reached end of device list or encountered a different issue!"
@@ -189,7 +189,7 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" ]; then
                 done
 
                 log "Found our device! Checking for timestamps..."
-                rdmDeviceLastseen=$(echo $rdmData | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Flast_seen\"\:\{\" '{print $2}' | awk -Ftimestamp\"\: '{print $2}' | awk -F\, '{print $1}' | sed 's/}//g')
+                rdmDeviceLastseen=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Flast_seen\"\:\{\" '{print $2}' | awk -Ftimestamp\"\: '{print $2}' | awk -F\, '{print $1}' | sed 's/}//g')
                 if [[ -z $rdmDeviceLastseen ]]; then
                         log "The device last seen status is empty!"
                 else
