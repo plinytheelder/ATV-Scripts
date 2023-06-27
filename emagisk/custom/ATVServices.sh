@@ -5,7 +5,14 @@
 POGOPKG=com.nianticlabs.pokemongo
 UNINSTALLPKGS="com.ionitech.airscreen cm.aptoidetv.pt com.netflix.mediaclient org.xbmc.kodi com.google.android.youtube.tv com.cloudmosa.puffinTV com.netflix.ninja"
 CONFIGFILE='/data/local/tmp/emagisk.config'
-deviceName=$(cat /data/local/tmp/atlas_config.json | tr , '\n' | grep -w 'deviceName' | awk -F ":" '{ print $2 }' | tr -d \"})
+deviceName() {
+	if [ "$mitm" = "atlas" ];then
+		$(cat /data/local/tmp/atlas_config.json | tr , '\n' | grep -w 'deviceName' | awk -F ":" '{ print $2 }' | tr -d \"})
+	else
+		$(cat /data/local/tmp/config.json | awk 'FNR == 3  {print $2}'| awk -F"\"" '{print $2}')
+	fi
+}		
+		
 
 # Check if this is a beta or production device
 
@@ -16,8 +23,11 @@ check_beta() {
     elif [ "$(pm list packages com.pokemod.atlas)" = "package:com.pokemod.atlas" ]; then
         log "Found Atlas production version!"
         ATLASPKG=com.pokemod.atlas
-    else
-        log "No Atlas installed. Abort!"
+	elif [ "$(pm list packages com.gocheats.launcher)" = "package:com.gocheats.launcher" ]; then
+        log "Found GoCheats production version!"
+        GOCHEATSPKG=com.gocheats.launcher
+	else
+        log "No MITM installed. Abort!"
         exit 1
     fi
 }
@@ -32,15 +42,21 @@ led_blue(){
     echo 1 > /sys/class/leds/led-sys/brightness
 }
 
-# Stops Atlas and Pogo and restarts Atlas MappingService
+# Stops MITM and Pogo and restarts MITM MappingService
 
 force_restart() {
-    am stopservice $ATLASPKG/com.pokemod.atlas.services.MappingService
-    am force-stop $POGOPKG
-    am force-stop $ATLASPKG
-    sleep 5
-    am startservice $ATLASPKG/com.pokemod.atlas.services.MappingService
-    log "Services were restarted!"
+	if [ "$mitm" = "atlas" ];then
+		am stopservice $ATLASPKG/com.pokemod.atlas.services.MappingService
+		am force-stop $POGOPKG
+		am force-stop $ATLASPKG
+		sleep 5
+		am startservice $ATLASPKG/com.pokemod.atlas.services.MappingService
+    else
+		am force-stop $GOCHEATSPKG
+		sleep 5
+		monkey -p $GOCHEATSPKG 1
+	fi
+	log "Services were restarted!"
 }
 
 # Recheck if $CONFIGFILE exists and has data. Repulls data and checks the RDM connection status.
@@ -49,7 +65,7 @@ configfile_rdm() {
     if [[ -s $CONFIGFILE ]]; then
         log "$CONFIGFILE exists and has data. Data will be pulled."
         source $CONFIGFILE
-        export rdm_user rdm_password rdm_backendURL atvdetails_receiver_host atvdetails_receiver_port atvdetails_interval
+        export rdm_user rdm_password rdm_backendURL atvdetails_receiver_host atvdetails_receiver_port atvdetails_interval mitm
     else
         log "Failed to pull the info. Make sure $($CONFIGFILE) exists and has the correct data."
     fi
@@ -144,10 +160,22 @@ if [ "$(settings get global stay_on_while_plugged_in)" != 3 ]; then
     settings put global stay_on_while_plugged_in 3
 fi
 
+if [ "$mitm" = "atlas" ];then
+	if ! pidof "$ATLASPKG:mapping"; then
+		log "Atlas not running on boot."
+		force_restart
+	fi
+else
+	if ! pidof "GOCHEATSPKG"; then
+		log "GC not running on boot."
+		force_restart
+	fi
+fi
+	
 
 # Health Service by Emi and Bubble with a little root touch
 
-if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" ]; then
+if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" -o "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" ]; then
     (
         log "eMagisk v$(cat "$MODDIR/version_lock"). Starting health check service in 4 minutes..."
         counter=0
@@ -167,12 +195,16 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" ]; then
             fi
 
             log "Started health check!"
-            atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | awk -F\" '{print $12}')
-            rdmData=$(curl -s -k "$rdm_backendURL")
+            if [ "$mitm" = "atlas" ];then
+				mitmDeviceName=$(cat /data/local/tmp/atlas_config.json | awk -F\" '{print $12}')
+			else
+				mitmDeviceName=$(cat /data/local/tmp/config.json | awk 'FNR == 3  {print $2}'| awk -F"\"" '{print $2}')
+            fi
+			rdmData=$(curl -s -k "$rdm_backendURL")
             rdmDeviceInfo=$(curl -s -k "$rdm_backendURL"  | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
             rdmDeviceName=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Fuuid\"\:\" '{print $2}' | awk -F\" '{print $1}')
 
-                until [[ $rdmDeviceName = $atlasDeviceName ]]
+                until [[ $rdmDeviceName = $mitmDeviceName ]]
                 do
                         $((rdmDeviceID++))
                         rdmDeviceInfo=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
@@ -197,7 +229,7 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" ]; then
                         calcTimeDiff=$(($now - $rdmDeviceLastseen))
 
                         if [[ $calcTimeDiff -gt 300 ]]; then
-                                log "Last seen at RDM is greater than 5 minutes -> Atlas Service will be restarting..."
+                                log "Last seen at RDM is greater than 5 minutes -> MITM Service will be restarting..."
                                 curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$deviceName'","reboot":"restart","RPL":"'$atvdetails_interval'"}'
                                 force_restart
                                 led_red
@@ -217,5 +249,5 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" ]; then
         done
     ) &
 else
-    log "Atlas isn't installed on this device! The daemon will stop."
+    log "MITM isn't installed on this device! The daemon will stop."
 fi
