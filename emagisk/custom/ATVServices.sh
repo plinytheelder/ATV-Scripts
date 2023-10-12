@@ -123,6 +123,25 @@ if [ "$(pm list packages -d com.android.vending)" = "package:com.android.vending
     pm enable com.android.vending
 fi
 
+for package in $ATLASPKG $GOCHEATSPKG com.android.shell; do
+    packageUID=$(dumpsys package "$package" | grep userId | head -n1 | cut -d= -f2)
+    policy=$(sqlite3 /data/adb/magisk.db "select policy from policies where uid='$packageUID'")
+    if [ "$policy" != 2 ]; then
+        log "$package current policy is $policy. Adding root permissions..."
+        if ! sqlite3 /data/adb/magisk.db "DELETE from policies WHERE package_name='$package'" ||
+            ! sqlite3 /data/adb/magisk.db "INSERT INTO policies (uid,policy,until,logging,notification) VALUES($packageUID,2,0,1,1)"; then
+            log "ERROR: Could not add $package (UID: $packageUID) to Magisk's DB."
+        fi
+    else
+        log "Root permissions for $package are OK!"
+    fi
+done
+
+if ["$(sqlite3 /data/adb/magisk.db "select value from settings where key='zygisk')" != 1 ]; then
+    sqlite3 /data/adb/magisk.db "INSERT INTO settings (key, value) VALUES ('zygisk', 1);"
+    log "Zygisk enabled."
+fi
+
 # Set atlas mock location permission as ignore
 
 if ! appops get $ATLASPKG android:mock_location | grep -qm1 'No operations'; then
@@ -191,7 +210,7 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" -a "$mitm" = "atlas" 
             fi
 
             log "Started health check!"
-            atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | awk -F\" '{print $12}')
+            atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | tr , '\n' | grep -w 'deviceName' | awk -F ":" '{ print $2 }' | tr -d \"})
             rdmDeviceInfo=$(curl -s -k "$rdm_backendURL"  | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}')
             rdmDeviceName=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Fuuid\"\:\" '{print $2}' | awk -F\" '{print $1}')
 
@@ -308,5 +327,5 @@ elif [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = 
         done
     )
 else
-    log "MITM isn't installed on this device! The daemon will stop."
+    log "Health Services disabled! The daemon will stop."
 fi
