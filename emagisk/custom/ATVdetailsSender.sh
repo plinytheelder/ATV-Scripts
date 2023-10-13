@@ -35,6 +35,8 @@ while true
     ip=$(ifconfig wlan0 |grep 'inet addr' |cut -d ':' -f2 |cut -d ' ' -f1 && ifconfig eth0 |grep 'inet addr' |cut -d ':' -f2 |cut -d ' ' -f1)
     ext_ip=$(curl -k -s https://ifconfig.me/)
     hostname=$(getprop net.hostname)
+    playstore=$(dumpsys package com.android.vending | grep versionName | head -n 1 | cut -d "=" -f 2 | cut -d " " -f 1)
+    proxyinfo=$(proxy=$(settings list global | grep "http_proxy=" | awk -F= '{ print $NF }'); [ -z "$proxy" ] || [ "$proxy" = ":0" ] && echo "none" || echo "$proxy")
 # atv performance
 # atlas config
     authBearer=$(cat $atlas_conf | tr , '\n' | grep -w 'authBearer' | awk -F ":" '{ print $2 }' | tr -d \"})
@@ -59,6 +61,8 @@ while true
     "ip": "${ip}",
     "ext_ip": "${ext_ip}",
     "hostname": "${hostname}",
+    "playstore": "${playstore}",
+    "proxyinfo": "${proxyinfo}",
     "reboot": "${reboottype}",
     "authBearer": "${authBearer}",
     "token": "${token}",
