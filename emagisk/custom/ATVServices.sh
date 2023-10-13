@@ -116,6 +116,16 @@ echo "$UNINSTALLPKGS" | tr ' ' '\n' | while read -r item; do
     fi
 done
 
+if [ "$setHostname" != true -a "$mitm" = "atlas" ] ;then
+	atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | tr , '\n' | grep -w 'deviceName' | awk -F ":" '{ print $2 }' | tr -d \"})
+ 	setprop net.hostname $atlasDeviceName
+  	log "Set hostname to $atlasDeviceName" 	
+elif [ "$setHostname" != true -a "$mitm" = "gc" ] ;then  
+	gcDeviceName=$(cat /data/local/tmp/config.json | awk 'FNR == 3  {print $2}'| awk -F"\"" '{print $2}')
+ 	setprop net.hostname $gcDeviceName
+  	log "Set hostname to $gcDeviceName"
+fi
+
 # Enable playstore
 
 if [ "$(pm list packages -d com.android.vending)" = "package:com.android.vending" ]; then
