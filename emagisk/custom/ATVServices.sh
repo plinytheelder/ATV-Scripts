@@ -231,7 +231,8 @@ if [ "$(pm list packages $ATLASPKG)" = "package:$ATLASPKG" -a "$mitm" = "atlas" 
                 done
 
                 log "Found our device! Checking for timestamps..."
-                rdmDeviceLastseen=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Flast_seen\"\:\{\" '{print $2}' | awk -Ftimestamp\"\: '{print $2}' | awk -F\, '{print $1}' | sed 's/}//g')
+                rdmDeviceLastseen=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Flast_seen\"\:\{\" '{print $2}' | awk -Ftimestamp\"\: '{print $2}' | awk -F\, '{print $1}' | sed 's/}//g' | sed 's/[]]//g')
+	            log "rdmDeviceLastSeen is: $rdmDeviceLastseen"
                 if [[ -z $rdmDeviceLastseen ]]; then
                         log "The device last seen status is empty!"
                 else
@@ -299,7 +300,8 @@ elif [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = 
                 done
 
                 log "Found our device! Checking for timestamps..."
-                rdmDeviceLastseen=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Flast_seen\"\:\{\" '{print $2}' | awk -Ftimestamp\"\: '{print $2}' | awk -F\, '{print $1}' | sed 's/}//g')
+                rdmDeviceLastseen=$(curl -s -k "$rdm_backendURL" | awk -F\[ '{print $2}' | awk -F\}\,\{\" '{print $'$rdmDeviceID'}' | awk -Flast_seen\"\:\{\" '{print $2}' | awk -Ftimestamp\"\: '{print $2}' | awk -F\, '{print $1}' | sed 's/}//g' | sed 's/[]]//g')
+	            log "rdmDeviceLastSeen is: $rdmDeviceLastseen"
                 if [[ -z $rdmDeviceLastseen ]]; then
                         log "The device last seen status is empty!"
                 else
