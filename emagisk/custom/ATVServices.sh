@@ -116,11 +116,11 @@ echo "$UNINSTALLPKGS" | tr ' ' '\n' | while read -r item; do
     fi
 done
 
-if [ "$setHostname" != true -a "$mitm" = "atlas" ] ;then
+if [ "$setHostname" = true -a "$mitm" = "atlas" ] ;then
 	atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | tr , '\n' | grep -w 'deviceName' | awk -F ":" '{ print $2 }' | tr -d \"})
  	setprop net.hostname $atlasDeviceName
   	log "Set hostname to $atlasDeviceName" 	
-elif [ "$setHostname" != true -a "$mitm" = "gc" ] ;then  
+elif [ "$setHostname" = true -a "$mitm" = "gc" ] ;then  
 	gcDeviceName=$(cat /data/local/tmp/config.json | awk 'FNR == 3  {print $2}'| awk -F"\"" '{print $2}')
  	setprop net.hostname $gcDeviceName
   	log "Set hostname to $gcDeviceName"
@@ -131,25 +131,6 @@ fi
 if [ "$(pm list packages -d com.android.vending)" = "package:com.android.vending" ]; then
     log "Enabling Play Store"
     pm enable com.android.vending
-fi
-
-for package in $ATLASPKG $GOCHEATSPKG com.android.shell; do
-    packageUID=$(dumpsys package "$package" | grep userId | head -n1 | cut -d= -f2)
-    policy=$(sqlite3 /data/adb/magisk.db "select policy from policies where uid='$packageUID'")
-    if [ "$policy" != 2 ]; then
-        log "$package current policy is $policy. Adding root permissions..."
-        if ! sqlite3 /data/adb/magisk.db "DELETE from policies WHERE package_name='$package'" ||
-            ! sqlite3 /data/adb/magisk.db "INSERT INTO policies (uid,policy,until,logging,notification) VALUES($packageUID,2,0,1,1)"; then
-            log "ERROR: Could not add $package (UID: $packageUID) to Magisk's DB."
-        fi
-    else
-        log "Root permissions for $package are OK!"
-    fi
-done
-
-if ["$(sqlite3 /data/adb/magisk.db "select value from settings where key='zygisk')" != 1 ]; then
-    sqlite3 /data/adb/magisk.db "INSERT INTO settings (key, value) VALUES ('zygisk', 1);"
-    log "Zygisk enabled."
 fi
 
 # Set atlas mock location permission as ignore
