@@ -120,3 +120,29 @@ elif [ $mitm = "gc" ];then
         force_restart
     fi
 fi
+
+# Give all mitm services root permissions
+
+for package in $GOCHEATSPKG com.android.shell; do
+    packageUID=$(dumpsys package "$package" | grep userId | head -n1 | cut -d= -f2)
+    policy=$(magisk --sqlite "select policy from policies where uid='$packageUID'")
+    if [ "$policy" != 2 ]; then
+        log "$package current policy is $policy. Adding root permissions..."
+        if ! magisk --sqlite "REPLACE INTO policies (uid,policy,until,logging,notification) VALUES($packageUID,2,0,1,1)"; then
+            log "ERROR: Could not add $package (UID: $packageUID) to Magisk's DB."
+        fi
+    else
+        log "Root permissions for $package are OK!"
+    fi
+done
+
+zygisk=$(magisk --sqlite "select value from settings where key='zygisk'")
+if [ "$zygisk" != 1 ]; then
+	log "Enabling zygisk..."
+        if ! magisk --sqlite "REPLACE INTO settings (key,value) VALUES('zygisk',1)"; then
+            log "ERROR: Could not add $package (UID: $packageUID) to Magisk's DB."
+        fi
+    else
+        log "Zygisk is enabled!"
+    fi
+done
