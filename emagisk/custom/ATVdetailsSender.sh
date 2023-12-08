@@ -3,7 +3,6 @@
 
 CONFIGFILE='/data/local/tmp/emagisk.config'
 logfile='/data/local/tmp/emagisk.log'
-reboottype=$1
 
 #Configs
 mitm_conf="/data/local/tmp/config.json"
@@ -59,7 +58,6 @@ while true
     "hostname": "${hostname}",
     "playstore": "${playstore}",
     "proxyinfo": "${proxyinfo}",
-    "reboot": "${reboottype}",
     "token": "${token}",
     "workers": "${workers}",
     "rotomUrl": "${rotomUrl}",
