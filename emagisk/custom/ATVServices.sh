@@ -127,7 +127,7 @@ for package in $GOCHEATSPKG com.android.shell; do
     packageUID=$(dumpsys package "$package" | grep userId | head -n1 | cut -d= -f2)
     policy=$(magisk --sqlite "select policy from policies where uid='$packageUID'")
     if [ "$policy" != 2 ]; then
-        log "$package current policy is $policy. Adding root permissions..."
+        log "$package current policy is not root. Adding root permissions..."
         if ! magisk --sqlite "REPLACE INTO policies (uid,policy,until,logging,notification) VALUES($packageUID,2,0,1,1)"; then
             log "ERROR: Could not add $package (UID: $packageUID) to Magisk's DB."
         fi
@@ -146,3 +146,47 @@ if [ "$zygisk" != 1 ]; then
         log "Zygisk is enabled!"
     fi
 done
+
+# Update Service
+
+if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "gc" -a "$emagiskenable" = true ]; then
+        log "eMagisk v$(cat "$MODDIR/version_lock"). Starting update check service in 15 minutes..."
+	while :; do
+            currentgc=$(curl -s -k "$versionsURL/versions" | grep -w "gc" | awk -F "=" '{ print $2 }')
+            currentpogo=$(curl -s -k "$versionsURL/versions" | grep -w "pogo" | awk -F "=" '{ print $2 }')
+            installedpogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
+            installedgc=$(dumpsys package com.gocheats.launcher | grep versionName | head -n1 | sed 's/ *versionName=//')
+	    type=$(uname -m)
+	        if [[ $installedpogo != $currentpogo ]] ;then
+        		if [ "$type" = "aarch64" ]; then
+			curl -o /data/local/tmp/pogo.apk "$versionsURL/pogo64.apk" 
+		else
+			curl -o /data/local/tmp/pogo.apk "$FileURL/pogo32.apk"
+		fi
+        		echo "Downloaded POGO (v$currentpogo)"
+        		sleep 1
+        		su -c "pm install -g /data/local/tmp/pogo.apk"
+        		log "Installed POGO (v$currentgc)"
+        		sleep 1
+    		else
+        		echo "No POGO update available (v$installedpogo = v$currentpogo)"
+    		fi
+
+    		if [[ $installedgc != $currentgc ]] ;then
+		        curl -o /data/local/tmp/gc.apk "$FileURL/gc.apk"
+        		echo "Downloaded GC (v$currentgc)"
+        		su -c "pm install -g /data/local/tmp/gc.apk"
+        		log "Installed GC (v$currentgc)"
+        		sleep 1
+    		else 
+        		log "No GC update available (v$installedgc = v$currentgc)"
+		fi
+      		if [[ $installedgc != $currentgc -o $installedpogo != $currentpogo ]] ;then
+			log "App updated detected. Restarting GC Services"
+			force_restart
+   		else
+     			log "MITM apps are up to date"
+  		sleep 1800
+   	done
+   fi
+     
