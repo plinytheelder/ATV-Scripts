@@ -25,6 +25,7 @@ while true
     deviceName=$(cat $mitm_conf | tr , '\n' | grep -w 'device_name' | awk -F ":" '{ print $2 }' | tr -d \"})
     arch=$(uname -m)
     productmodel=$(getprop ro.product.model)
+    emagiskversion=$(cat "$MODDIR/version_lock")
     pogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
     mitmversion=$(dumpsys package com.gocheats.launcher | grep versionName | head -n1 | sed 's/ *versionName=//')
     temperature=$(cat /sys/class/thermal/thermal_zone0/temp | cut -c -2)
@@ -39,6 +40,7 @@ while true
     token=$(cat $mitm_conf | tr , '\n' | grep -w 'api_key' | awk -F ":" '{ print $2 }' | tr -d \"})
     workers=$(cat $mitm_conf | tr , '\n' | grep -w 'workers_count' | awk -F ":" '{ print $2 }' | tr -d \"})
     rotomUrl=$(cat $mitm_conf | tr , '\n' | grep -w 'rotom_url' | awk -F "\"" '{ print $4 }')
+    rotomsecret=$(cat $mitm_conf | tr , '\n' | grep -w 'rotom_secret' | awk -F "\"" '{ print $4 }')
 
 #send data
     curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/webhook -H "Accept: application/json" -H "Content-Type: application/json" --data-binary @- <<DATA
@@ -47,6 +49,7 @@ while true
     "deviceName": "${deviceName}",
     "arch": "${arch}",
     "productmodel": "${productmodel}",
+    "emagiskversion": "${emagiskversion}",
     "pogo": "${pogo}",
     "mitmversion": "${mitmversion}",
     "temperature": "${temperature}",
@@ -59,7 +62,8 @@ while true
     "reboot": "${reboottype}",
     "token": "${token}",
     "workers": "${workers}",
-    "rotomUrl": "${rotomUrl}"
+    "rotomUrl": "${rotomUrl}",
+    "rotomsecret": "${rotomsecret}"
 }
 
 DATA
