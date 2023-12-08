@@ -162,7 +162,7 @@ fi
 # Update Service
 
 if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "gc" -a "$emagiskenable" = true ]; then
-        log "eMagisk v$(cat "$MODDIR/version_lock"). Starting update check service in 15 minutes..."
+        log "eMagisk v$(cat "$MODDIR/version_lock"). Starting update check service every "$atvdetails_interval" minutes..."
 	while :; do
             currentgc=$(curl -s -k "$versionsURL/versions" | grep -w "gc" | awk -F "=" '{ print $2 }')
             currentpogo=$(curl -s -k "$versionsURL/versions" | grep -w "pogo" | awk -F "=" '{ print $2 }')
@@ -170,6 +170,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
             installedgc=$(dumpsys package com.gocheats.launcher | grep versionName | head -n1 | sed 's/ *versionName=//')
 	    type=$(uname -m)
 	        if [[ $installedpogo != $currentpogo ]] ;then
+	 	log "New POGO version detected. Downloading apk." 
         		if [ "$type" = "aarch64" ]; then
 			curl -o /data/local/tmp/pogo.apk "$versionsURL/pogo64.apk" 
 		else
@@ -185,6 +186,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
     		fi
 
     		if [[ $installedgc != $currentgc ]] ;then
+	 	log "New GC version detected. Downloading apk."
 		        curl -o /data/local/tmp/gc.apk "$FileURL/gc.apk"
         		echo "Downloaded GC (v$currentgc)"
         		su -c "pm install -g /data/local/tmp/gc.apk"
@@ -200,7 +202,8 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
    		else
      			log "MITM apps are up to date"
 		fi
-  		sleep 1800
+  		log "Checking again in "$atvdetails_interval" minutes"
+  		sleep $atvdetails_interval
    	done
 else
         log "eMagisk v$(cat "$MODDIR/version_lock"). Update Services disabled."
