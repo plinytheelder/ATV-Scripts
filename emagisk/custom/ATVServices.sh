@@ -125,7 +125,7 @@ fi
 
 for package in $GOCHEATSPKG com.android.shell; do
     packageUID=$(dumpsys package "$package" | grep userId | head -n1 | cut -d= -f2)
-    policy=$(magisk --sqlite "select policy from policies where uid='$packageUID'")
+    policy=$(magisk --sqlite "select policy from policies where uid='$packageUID'" | cut -d= -f2)
     if [ "$policy" != 2 ]; then
         log "$package current policy is not root. Adding root permissions..."
         if ! magisk --sqlite "REPLACE INTO policies (uid,policy,until,logging,notification) VALUES($packageUID,2,0,1,1)"; then
@@ -136,7 +136,7 @@ for package in $GOCHEATSPKG com.android.shell; do
     fi
 done
 
-zygisk=$(magisk --sqlite "select value from settings where key='zygisk'")
+zygisk=$(magisk --sqlite "select value from settings where key='zygisk'" | cut -d= -f2)
 if [ "$zygisk" != 1 ]; then
 	log "Enabling zygisk..."
         if ! magisk --sqlite "REPLACE INTO settings (key,value) VALUES('zygisk',1)"; then
@@ -186,6 +186,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
 			force_restart
    		else
      			log "MITM apps are up to date"
+		fi
   		sleep 1800
    	done
    fi
