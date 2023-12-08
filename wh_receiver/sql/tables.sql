@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS `ATVsummary` (
   `MACe` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ip` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hostname` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `playstore` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `proxyinfo` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `token` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `workers` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rotomUrl` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
