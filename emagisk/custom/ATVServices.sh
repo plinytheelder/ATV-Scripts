@@ -179,7 +179,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
         		echo "Downloaded POGO (v$currentpogo)"
         		sleep 1
         		su -c "pm install -g /data/local/tmp/pogo.apk"
-        		log "Installed POGO (v$currentgc)"
+        		log "Installed POGO (v$currentpogo)"
         		sleep 1
     		else
         		log "Current POGO (v$installedpogo installed)"
@@ -190,7 +190,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
 		        curl -o /data/local/tmp/gc.apk "$FileURL/gc.apk"
         		echo "Downloaded GC (v$currentgc)"
         		su -c "pm install -g /data/local/tmp/gc.apk"
-        		log "Current GC (v$currentgc)"
+        		log "Installed GC (v$currentgc)"
         		sleep 1
     		else 
         		log "No GC update available (v$installedgc = v$currentgc)"
