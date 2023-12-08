@@ -142,10 +142,9 @@ if [ "$zygisk" != 1 ]; then
         if ! magisk --sqlite "REPLACE INTO settings (key,value) VALUES('zygisk',1)"; then
             log "ERROR: Could not add $package (UID: $packageUID) to Magisk's DB."
         fi
-    else
+else
         log "Zygisk is enabled!"
-    fi
-done
+fi
 
 # Update Service
 
