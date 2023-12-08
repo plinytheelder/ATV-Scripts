@@ -44,6 +44,19 @@ force_restart() {
     log "Services were restarted!"
 }
 
+mitm_root() {
+    packageUID=$(dumpsys package "$GOCHEATSPKG" | grep userId | head -n1 | cut -d= -f2)
+    policy=$(magisk --sqlite "select policy from policies where uid='$packageUID'" | cut -d= -f2)
+    if [ "$policy" != 2 ]; then
+        log "$package current policy is not root. Adding root permissions..."
+        if ! magisk --sqlite "REPLACE INTO policies (uid,policy,until,logging,notification) VALUES($packageUID,2,0,1,1)"; then
+            log "ERROR: Could not add $GOCHEATSPKG (UID: $packageUID) to Magisk's DB."
+        fi
+    else
+        log "Root permissions for $GOCHEATSPKG are OK!"
+    fi
+}
+
 
 if [ "$setHostname" = true -a "$mitm" = "atlas" ] ;then
 	atlasDeviceName=$(cat /data/local/tmp/atlas_config.json | tr , '\n' | grep -w 'deviceName' | awk -F ":" '{ print $2 }' | tr -d \"})
@@ -168,20 +181,21 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
         		log "Installed POGO (v$currentgc)"
         		sleep 1
     		else
-        		echo "No POGO update available (v$installedpogo = v$currentpogo)"
+        		log "Current POGO (v$installedpogo installed)"
     		fi
 
     		if [[ $installedgc != $currentgc ]] ;then
 		        curl -o /data/local/tmp/gc.apk "$FileURL/gc.apk"
         		echo "Downloaded GC (v$currentgc)"
         		su -c "pm install -g /data/local/tmp/gc.apk"
-        		log "Installed GC (v$currentgc)"
+        		log "Current GC (v$currentgc)"
         		sleep 1
     		else 
         		log "No GC update available (v$installedgc = v$currentgc)"
 		fi
       		if [[ $installedgc != $currentgc -o $installedpogo != $currentpogo ]] ;then
 			log "App updated detected. Restarting GC Services"
+   			mitm_root
 			force_restart
    		else
      			log "MITM apps are up to date"
