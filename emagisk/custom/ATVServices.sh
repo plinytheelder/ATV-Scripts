@@ -189,5 +189,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
 		fi
   		sleep 1800
    	done
-   fi
+else
+        log "eMagisk v$(cat "$MODDIR/version_lock"). Update Services disabled."
+fi
      
