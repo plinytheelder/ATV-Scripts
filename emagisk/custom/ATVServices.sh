@@ -162,6 +162,7 @@ fi
 # Update Service
 
 if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "gc" -a "$emagiskenable" = true ]; then
+    (
         log "Starting update check service every $(($atvdetails_interval / 60)) minutes..."
 	while :; do
             currentgc=$(curl -s -k "$versionsURL/versions" | grep -w "gc" | awk -F "=" '{ print $2 }')
@@ -205,6 +206,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
   		log "Checking again in $(($atvdetails_interval / 60)) minutes"
   		sleep $atvdetails_interval
    	done
+    )
 else
         log "eMagisk v$(cat "$MODDIR/version_lock"). Update Services disabled."
 fi
