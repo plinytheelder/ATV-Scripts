@@ -159,6 +159,12 @@ else
         log "Zygisk is enabled!"
 fi
 
+if [ -f "$MODDIR/ATVdetailsSender.sh" ]; then
+    sleep 60
+    log "Starting ATVdetailsSender.sh"
+    . "$MODDIR/ATVdetailsSender.sh"
+fi
+
 # Update Service
 
 if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "gc" -a "$emagiskenable" = true ]; then
@@ -194,7 +200,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
         		log "Installed GC (v$currentgc)"
         		sleep 1
     		else 
-        		log "No GC update available (v$installedgc = v$currentgc)"
+        		log "Current GC (v$installedgc installed)"
 		fi
       		if [[ $installedgc != $currentgc -o $installedpogo != $currentpogo ]] ;then
 			log "App updated detected. Restarting GC Services"
