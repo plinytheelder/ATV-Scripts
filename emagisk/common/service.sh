@@ -36,6 +36,10 @@ if [ -f "$MODDIR/ATVServices.sh" ]; then
     sleep 20
     log "Starting ATVServices.sh"
     . "$MODDIR/ATVServices.sh"
+fi
+
+if [ -f "$MODDIR/ATVdetailsSender.sh" ]; then
+    sleep 20
     log "Starting ATVdetailsSender.sh"
     . "$MODDIR/ATVdetailsSender.sh"
 fi
