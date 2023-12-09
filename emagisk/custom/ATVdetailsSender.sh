@@ -10,14 +10,9 @@ mitm_conf="/data/local/tmp/config.json"
 source $CONFIGFILE
 export useSender atvdetails_interval atvdetails_receiver_host atvdetails_receiver_port
 
-# initial sleep for reboot
-sleep 120
-
-while true
-  do
-    if [ "$useSender" != true ] ;then
-      echo "`date +%Y-%m-%d_%T` ATVdetailsSender: sender stopped" >> $logfile && exit 1
-    fi
+if [ "$useSender" != true ] ;then
+    echo "`date +%Y-%m-%d_%T` ATVdetailsSender: sender stopped" >> $logfile && exit 1
+fi
 
 # generic
     RPL=$(($atvdetails_interval/60))
@@ -65,6 +60,3 @@ while true
 }
 
 DATA
-
-    sleep $atvdetails_interval
-  done;
