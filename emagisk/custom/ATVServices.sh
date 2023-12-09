@@ -159,12 +159,6 @@ else
         log "Zygisk is enabled!"
 fi
 
-if [ -f "$MODDIR/ATVdetailsSender.sh" ]; then
-    sleep 60
-    log "Starting ATVdetailsSender.sh"
-    . "$MODDIR/ATVdetailsSender.sh"
-fi
-
 # Update Service
 
 if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "gc" -a "$emagiskenable" = true ]; then
@@ -210,6 +204,8 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
      			log "MITM apps are up to date"
 		fi
   		log "Checking again in $(($atvdetails_interval / 60)) minutes"
+    		log "Sending ATV Details to receiver"
+    		. "$MODDIR/ATVdetailsSender.sh"
   		sleep $atvdetails_interval
    	done
     )
