@@ -324,13 +324,14 @@
         ]
       },
       "gridPos": {
-        "h": 4,
-        "w": 7,
+        "h": 5,
+        "w": 9,
         "x": 0,
         "y": 0
       },
       "id": 2,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -343,7 +344,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -377,92 +378,6 @@
         }
       ],
       "title": "Device Overview",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 7,
-        "y": 0
-      },
-      "id": 32,
-      "options": {
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n(SELECT count(reboot) FROM ATVstats where reboot='restart' and timestamp > cast(current_timestamp as date)) as 'Game Restarts',\n(SELECT count(reboot) FROM ATVstats where reboot='reboot' and timestamp > cast(current_timestamp as date)) as 'Device Reboots'",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Daily Restart Count",
       "type": "table"
     },
     {
@@ -592,13 +507,14 @@
         ]
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 11,
+        "h": 5,
+        "w": 8,
+        "x": 9,
         "y": 0
       },
       "id": 8,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -610,18 +526,19 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
             "uid": "jxa3CkaVz"
           },
+          "editorMode": "code",
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\nifnull(pogo,'no_data') as 'PoGo',\nifnull(atlas,'no_data') as 'Atlas',\nifnull(magisk,'no_data') as 'Magisk',\ncount(deviceName) as '#devices'\nfrom ATVsummary\nwhere timestamp > now() - interval 1 day\nGROUP BY pogo, atlas, magisk\n",
+          "rawSql": "SELECT\nifnull(pogo,'no_data') as 'PoGo',\nifnull(mitmversion,'no_data') as 'MITM',\nifnull(magisk,'no_data') as 'Magisk',\ncount(deviceName) as '#devices'\nfrom ATVsummary\nwhere timestamp > now() - interval 1 day\nGROUP BY pogo, mitmversion, magisk\n",
           "refId": "A",
           "select": [
             [
@@ -633,6 +550,23 @@
               }
             ]
           ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
           "timeColumn": "time",
           "where": [
             {
@@ -1073,6 +1007,18 @@
                 "value": 85
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "token"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 345
+              }
+            ]
           }
         ]
       },
@@ -1080,10 +1026,11 @@
         "h": 6,
         "w": 17,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 25,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -1095,18 +1042,19 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
             "uid": "jxa3CkaVz"
           },
+          "editorMode": "code",
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\nifnull(rdmUrl, 'no_data') as 'rdmUrl',\nifnull(authBearer, 'no_data') as 'authBearer',\nifnull(token, 'no_data') as 'deviceAuthToken',\nifnull(email, 'no_data') as 'email',\nifnull(onBoot, 'no_data') as 'runOnBoot',\ncount(deviceName) as '#devices'\nfrom ATVsummary\nwhere timestamp > now() - interval 1 day\nGROUP BY rdmUrl,authBearer,token,email,onBoot",
+          "rawSql": "SELECT\nifnull(rotomUrl, 'no_data') as 'rotomUrl',\nifnull(rotomsecret, 'no_data') as 'rotomsecret',\nifnull(token, 'no_data') as 'token',\nifnull(workers, 'no_data') as 'workers',\ncount(deviceName) as '#devices'\nfrom ATVsummary\nwhere timestamp > now() - interval 1 day\nGROUP BY rotomUrl,rotomsecret,token,workers",
           "refId": "A",
           "select": [
             [
@@ -1118,6 +1066,23 @@
               }
             ]
           ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
           "timeColumn": "time",
           "where": [
             {
@@ -1204,10 +1169,11 @@
         "h": 7,
         "w": 7,
         "x": 0,
-        "y": 10
+        "y": 11
       },
       "id": 22,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -1224,7 +1190,7 @@
           }
         ]
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -1359,10 +1325,11 @@
         "h": 7,
         "w": 5,
         "x": 7,
-        "y": 10
+        "y": 11
       },
       "id": 23,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -1379,7 +1346,7 @@
           }
         ]
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -1503,10 +1470,11 @@
         "h": 7,
         "w": 5,
         "x": 12,
-        "y": 10
+        "y": 11
       },
       "id": 27,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -1518,7 +1486,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -1553,575 +1521,10 @@
       ],
       "title": "Temperature (Top 5)",
       "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 7,
-        "x": 0,
-        "y": 17
-      },
-      "id": 26,
-      "options": {
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\nmin(avj) as 'minAvj',\navg(avj) as 'avgAvj',\nmax(avj) as 'maxAvj'\nfrom ATVstats\nwhere timestamp > now()-interval 20 minute",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Average Jump",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "minTemp"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 77
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "maxTemp"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 77
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "avgTemp"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 78
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Origin"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 140
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 5,
-        "x": 7,
-        "y": 17
-      },
-      "id": 24,
-      "options": {
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT DISTINCT deviceName, min(avj)\nFROM ATVstats\nwhere timestamp > now() - interval 20 minute\nGroup by deviceName\norder by min(avj) ASC\nlimit 5\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Average Jump (Bottom 5)",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 5,
-        "x": 12,
-        "y": 17
-      },
-      "id": 30,
-      "options": {
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT DISTINCT deviceName, max(avj)\nFROM ATVstats\nwhere timestamp >  now() - interval 20 minute\nGroup by deviceName\norder by max(avj) DESC\nlimit 5\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Average Jump (Top 5)",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 7,
-        "x": 0,
-        "y": 24
-      },
-      "id": 29,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.1.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\nmin(cur) as 'minCur',\navg(cur) as 'avgCur',\nmax(cur) as 'maxCur'\nfrom ATVstats\nwhere timestamp > now() - interval 1 hour",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Current Jump",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 5,
-        "x": 7,
-        "y": 24
-      },
-      "id": 31,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.1.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT DISTINCT deviceName, min(cur)\nFROM ATVstats\nwhere timestamp > now() -  interval 1 hour\nGroup by deviceName\norder by min(cur) ASC\nlimit 5\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Current Jump (Bottom 5)",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "jxa3CkaVz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": false,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 5,
-        "x": 12,
-        "y": 24
-      },
-      "id": 33,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "9.1.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "mysql",
-            "uid": "jxa3CkaVz"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT DISTINCT deviceName, max(cur)\nFROM ATVstats\nwhere timestamp > now() -  interval 1 hour\nGroup by deviceName\norder by max(cur) DESC\nlimit 5\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Current Jump (Top 5)",
-      "type": "table"
     }
   ],
   "refresh": "",
-  "revision": 1,
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [],
   "templating": {
     "list": []
@@ -2148,6 +1551,6 @@
   "timezone": "",
   "title": "Device Dashboard",
   "uid": "YBmfNzFGz",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }
