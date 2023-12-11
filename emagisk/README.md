@@ -11,41 +11,28 @@ If you really want to install this version, you have to:
 1. Create the zip file with `./build.sh`
 2. adb push the magisk module into the device
 3. `magisk --install-module magiskmodule.zip`
-4. copy `emagisk.config` from `https://github.com/tchavei/eMagisk/blob/master/emagisk.config` into `/data/local/tmp` of your device
-5. **Edit the file to match your RDM username, password and server IP:PORT**
+4. copy `emagisk.config` into `/data/local/tmp` of your device
+5. **Edit the file to match your info**
 6. `reboot`
 
 Note: step 3 only works on Magisk versions 21.2 and forward. If you have an earlier Magisk version, install through Magisk Manager (scrcpy into the device) or update your Magisk.
 
-## RDM Device Status
+## Update Services
 
-To prevent eMagisk from hammering RDM with logins, do this:
+To keep your devices up to date:
 
-1. Create a script that pulls device status logs. So a `devicestatus.sh` file that looks like this:
+1. Find some place to stick stuff that your devices can reach. Local server is probably ideal.
 
-`curl -s -k -u user:password "http://rdmurl/api/get_data?show_devices=true&formatted=true" -o devicestatus.json`
-
-Should probably put it somewhere it can be accessed, I put it in `/var/www/devices`. Then make it executable `sudo chmod +x devicestatus.sh`.
-
-2. Cron it every minute
-
-`*/1 * * * * cd /var/www/devices && sh devices.sh`
-
-3. Need to add a reverse proxy so file can be reached? Something as easy as this works:
+2. Add a `versions` file with info like this:
 
 ```
-server {
-    listen 9123;
-    server_name  127.0.0.1;
-        location / {
-        alias /var/www/devices/;
-    }
-}
+pogo=0.291.2
+gc=3.0.113
 ```
 
-4. Change `rdm_backendURL` in emagisk config to the file location, so like `http://127.0.0.1:9123/devicestatus.json`
+3. Add the following files to that directory `pogo32.apk`, `pogo64.apk`, and `gc.apk`.
 
-NOTE: If you don't want to do this, then just set `rdm_backendURL` equal to `http://rdmurl/api/get_data?show_devices=true&formatted=true`...I think that's it.
+4. Update the `versions` file as needed to keep track of updates.
 
 ## Webhook Stats
 
