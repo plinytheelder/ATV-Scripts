@@ -63,7 +63,7 @@ if [ "$setHostname" = true -a "$mitm" = "atlas" ] ;then
  	setprop net.hostname $atlasDeviceName
   	log "Set hostname to $atlasDeviceName" 	
 elif [ "$setHostname" = true -a "$mitm" = "gc" ] ;then  
-	gcDeviceName=$(cat /data/local/tmp/config.json | awk 'FNR == 3  {print $2}'| awk -F"\"" '{print $2}')
+	gcDeviceName=$(cat /data/local/tmp/config.json | tr , '\n' | grep -w 'device_name' | awk -F ":" '{ print $2 }' | tr -d \"})
  	setprop net.hostname $gcDeviceName
   	log "Set hostname to $gcDeviceName"
 fi
