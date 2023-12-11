@@ -1,6 +1,4 @@
-rdm_user="rdm_something_something"
-rdm_password="super_secure_password"
-rdm_backendURL="http://127.0.0.1:9000"
+versionsURL="192.168.0.1"
 useSender=true
 atvdetails_interval=300
 atvdetails_receiver_host="192.168.0.1"
