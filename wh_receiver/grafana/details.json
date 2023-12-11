@@ -160,7 +160,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 68
+                "value": 104
               }
             ]
           },
@@ -531,20 +531,58 @@
             },
             "properties": [
               {
-                "id": "custom.width"
+                "id": "custom.width",
+                "value": 221
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Reboots"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 182
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "playstore"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 244
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rotomsecret"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 368
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 18,
+        "h": 23,
         "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 2,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -561,18 +599,19 @@
           }
         ]
       },
-      "pluginVersion": "9.4.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "mysql",
             "uid": "jxa3CkaVz"
           },
+          "editorMode": "code",
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\na.deviceName,\nifnull(a.ip,'no_data') as 'ip',\nifnull(a.pogo,'no_data') as 'pogo',\nifnull(a.atlas,'no_data') as 'atlas',\nifnull(a.arch,'no_data') as 'arch',\nifnull(a.productmodel,'no_data') as 'productmodel',\ntemperature as 'temp',\n(SELECT count(*) from ATVstats where ATVstats.deviceName = a.deviceName and ATVstats.reboot = 'restart' and ATVstats.timestamp > cast(current_timestamp as date)) as 'Restarts',\n(SELECT count(*) from ATVstats where ATVstats.deviceName = a.deviceName and ATVstats.reboot = 'reboot' and ATVstats.timestamp > cast(current_timestamp as date)) as 'Reboots',\nconvert_tz(timestamp,@@session.time_zone, '+00:00') as 'lastUpdate'\n-- timestamp as 'lastUpdate'\nFROM ATVsummary a\nORDER BY a.deviceName ASC\n",
+          "rawSql": "SELECT\na.deviceName,\nifnull(a.ip,'no_data') as 'ip',\nifnull(a.pogo,'no_data') as 'pogo',\nifnull(a.mitmversion,'no_data') as 'mitm',\nifnull(a.workers,'no_data') as 'workers',\nifnull(a.playstore,'no_data') as 'playstore',\nifnull(a.emagiskversion,'no_data') as 'emagiskversion',\nifnull(a.arch,'no_data') as 'arch',\nifnull(a.productmodel,'no_data') as 'productmodel',\nifnull(a.rotomsecret,'no_data') as 'rotomsecret',\ntemperature as 'temp',\nconvert_tz(timestamp,@@session.time_zone, '+00:00') as 'lastUpdate'\n-- timestamp as 'lastUpdate'\nFROM ATVsummary a\nwhere timestamp > cast(current_timestamp as date)\nORDER BY a.deviceName ASC\n",
           "refId": "A",
           "select": [
             [
@@ -584,6 +623,23 @@
               }
             ]
           ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
           "timeColumn": "time",
           "where": [
             {
@@ -601,7 +657,6 @@
   "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [],
   "templating": {
     "list": []
@@ -616,6 +671,6 @@
   "timezone": "",
   "title": "Device Details",
   "uid": "RVgxODPGz",
-  "version": 1,
+  "version": 7,
   "weekStart": ""
 }
