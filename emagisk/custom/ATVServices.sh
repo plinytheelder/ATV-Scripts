@@ -175,7 +175,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
         		if [ "$type" = "aarch64" ]; then
 			curl -o /data/local/tmp/pogo.apk "$versionsURL/pogo64.apk" 
 		else
-			curl -o /data/local/tmp/pogo.apk "$FileURL/pogo32.apk"
+			curl -o /data/local/tmp/pogo.apk "$versionsURL/pogo32.apk"
 		fi
         		echo "Downloaded POGO (v$currentpogo)"
         		sleep 1
@@ -188,7 +188,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
 
     		if [[ $installedgc != $currentgc ]] ;then
 	 	log "New GC version detected. Downloading apk."
-		        curl -o /data/local/tmp/gc.apk "$FileURL/gc.apk"
+		        curl -o /data/local/tmp/gc.apk "$versionsURL/gc.apk"
         		echo "Downloaded GC (v$currentgc)"
         		su -c "pm install -g /data/local/tmp/gc.apk"
         		log "Installed GC (v$currentgc)"
