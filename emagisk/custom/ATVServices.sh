@@ -170,6 +170,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
             installedpogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
             installedgc=$(dumpsys package com.gocheats.launcher | grep versionName | head -n1 | sed 's/ *versionName=//')
 	    type=$(uname -m)
+     		counter=0
 	        if [[ $installedpogo != $currentpogo ]] ;then
 	 	log "New POGO version detected. Downloading apk." 
         		if [ "$type" = "aarch64" ]; then
@@ -181,6 +182,7 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
         		sleep 1
         		su -c "pm install -g /data/local/tmp/pogo.apk"
         		log "Installed POGO (v$currentpogo)"
+	  		counter=$((counter+1))
         		sleep 1
     		else
         		log "Current POGO (v$installedpogo installed)"
@@ -192,12 +194,13 @@ if [ "$(pm list packages $GOCHEATSPKG)" = "package:$GOCHEATSPKG" -a "$mitm" = "g
         		echo "Downloaded GC (v$currentgc)"
         		su -c "pm install -g /data/local/tmp/gc.apk"
         		log "Installed GC (v$currentgc)"
+	  		counter=$((counter+1))
         		sleep 1
     		else 
         		log "Current GC (v$installedgc installed)"
 		fi
-      		if [[ $installedgc != $currentgc -o $installedpogo != $currentpogo ]] ;then
-			log "App updated detected. Restarting GC Services"
+      		if [[ $counter != 0 ]] ;then
+			log "$counter apps updated detected. Restarting GC Services"
    			mitm_root
 			force_restart
    		else
