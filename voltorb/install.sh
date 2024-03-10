@@ -154,6 +154,12 @@ print_modname() {
     ui_print " "
 }
 
+# remove old emagisk.
+if [ -d /data/adb/modules/emagisk ]; then
+    rm -rf /data/adb/modules/emagisk
+    ui_print "! emagisk module will be removed. Do NOT install it again along with Voltorb or, again, Voltorb will use seldestruct on your ATV."
+fi
+
 # Copy/extract your module files into $MODPATH in on_install.
 on_install() {
     # The following is the default implementation: extract $ZIPFILE/system to $MODPATH
