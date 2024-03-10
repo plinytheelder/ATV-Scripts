@@ -3,7 +3,7 @@
 # Base stuff we need
 
 POGOPKG=com.nianticlabs.pokemongo
-CONFIGFILE='/data/local/tmp/emagisk.config'
+CONFIGFILE='/data/local/tmp/voltorb.config'
 
 source $CONFIGFILE
 export mitm emagiskenable
