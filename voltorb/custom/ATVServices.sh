@@ -55,7 +55,7 @@ mitm_root() {
 
 
 if [ "$setHostname" = true -a "$mitm" = "vmapper" ] ;then
-        vmDeviceName=$(cat /data/local/tmp/config.json | tr , '\n' | grep -w 'device_name' | awk -F ":" '{ print $2 }' | tr -d \"})
+        vmDeviceName=$(cat /data/data/de.vahrmap.vmapper/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
         setprop net.hostname $vmDeviceName
         log "Set hostname to $vmDeviceName" 
 elif [ "$setHostname" = true -a "$mitm" = "gc" ] ;then  
@@ -75,7 +75,7 @@ if [ "$(pm list packages -d com.android.vending)" = "package:com.android.vending
     pm enable com.android.vending
 fi
 
-# Set atlas mock location permission as ignore
+# Set mock location permission as ignore
 
 if ! appops get $VMPKG android:mock_location | grep -qm1 'No operations'; then
     log "Removing mock location permissions from $VMPKG"
@@ -150,7 +150,7 @@ rm /sdcard/vmapper.log
 
 # Update Service
 
-if [ "$emagiskenable" = true ]; then
+if [ "$monitoringenable" = true ]; then
     (
         log "Starting update check service every $(($atvdetails_interval / 60)) minutes..."
         while :; do
