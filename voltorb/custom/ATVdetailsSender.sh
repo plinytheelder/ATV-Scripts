@@ -1,11 +1,11 @@
 #!/system/bin/sh
 # version 1.6
 
-CONFIGFILE='/data/local/tmp/emagisk.config'
-logfile='/data/local/tmp/emagisk.log'
+CONFIGFILE='/data/local/tmp/voltorb.config'
+logfile='/data/local/tmp/voltorb.log'
 
 #Configs
-mitm_conf="/data/local/tmp/config.json"
+mitm_conf="/data/data/de.vahrmap.vmapper/shared_prefs/config.xml"
 
 source $CONFIGFILE
 export useSender atvdetails_interval atvdetails_receiver_host atvdetails_receiver_port
@@ -16,12 +16,12 @@ fi
 
 # generic
     RPL=$(($atvdetails_interval/60))
-    deviceName=$(cat $mitm_conf | tr , '\n' | grep -w 'device_name' | awk -F ":" '{ print $2 }' | tr -d \"})
+    deviceName=$(cat $mitm_conf | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
     arch=$(uname -m)
     productmodel=$(getprop ro.product.model)
-    emagiskversion=$(cat "$MODDIR/version_lock")
+    voltorbversion=$(cat "$MODDIR/version_lock")
     pogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
-    mitmversion=$(dumpsys package com.gocheats.launcher | grep versionName | head -n1 | sed 's/ *versionName=//')
+    mitmversion=$(dumpsys package de.vahrmap.vmapper | grep versionName | head -n1 | sed 's/ *versionName=//')
     temperature=$(cat /sys/class/thermal/thermal_zone0/temp | cut -c -2)
     magisk=$(magisk -c | sed 's/:.*//')
     mace=$(ifconfig eth0 |grep 'HWaddr' |awk '{ print ($NF) }')
@@ -31,10 +31,9 @@ fi
     proxyinfo=$(proxy=$(settings list global | grep "http_proxy=" | awk -F= '{ print $NF }'); [ -z "$proxy" ] || [ "$proxy" = ":0" ] && echo "none" || echo "$proxy")
 # atv performance
 # config
-    token=$(cat $mitm_conf | tr , '\n' | grep -w 'api_key' | awk -F ":" '{ print $2 }' | tr -d \"})
-    workers=$(cat $mitm_conf | tr , '\n' | grep -w 'workers_count' | awk -F ":" '{ print $2 }' | tr -d \"})
-    rotomUrl=$(cat $mitm_conf | tr , '\n' | grep -w 'rotom_url' | awk -F "\"" '{ print $4 }')
-    rotomsecret=$(cat $mitm_conf | tr , '\n' | grep -w 'rotom_secret' | awk -F "\"" '{ print $4 }')
+    token=$(cat $mitm_conf | grep "authid" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+    workers=$(cat $mitm_conf | grep "workers" | awk -F "\"" '{print tolower($4)}')
+    rotomUrl=$(cat $mitm_conf | grep "websocketurl" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
 
 #send data
     curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/webhook -H "Accept: application/json" -H "Content-Type: application/json" --data-binary @- <<DATA
@@ -56,7 +55,6 @@ fi
     "token": "${token}",
     "workers": "${workers}",
     "rotomUrl": "${rotomUrl}",
-    "rotomsecret": "${rotomsecret}"
 }
 
 DATA
