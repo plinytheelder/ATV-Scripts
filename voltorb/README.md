@@ -26,11 +26,11 @@ To keep your devices up to date:
 2. Add a `versions` file with info like this:
 
 ```
-pogo=0.291.2
-gc=3.0.113
+vmpogo=0.303.0
+vmapper=V15.2.3D
 ```
 
-3. Add the following files to that directory `pogo32.apk`, `pogo64.apk`, and `gc.apk`.
+3. Add the following files to that directory `vmpogo32.apk`, `vmpogo64.apk`, and `vmapper.apk`.
 
 4. Update the `versions` file as needed to keep track of updates.
 
