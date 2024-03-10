@@ -124,6 +124,13 @@ REPLACE="
 print_modname() {
     version=$(sed -n "s/^version=//p" $TMPDIR/module.prop)
     versionCode=$(sed -n "s/^versionCode=//p" $TMPDIR/module.prop)
+    ui_print " _______________________________________________"
+    ui_print "|                                               |"
+    ui_print "|         A wild Voltorb appeared...            |"
+    ui_print "|                                               |"
+    ui_print "|          ...Voltorb used selfdestruct...      |"
+    ui_print "|                                               |"
+    ui_print "|_______________________________________________| "
     ui_print "⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿"
     ui_print "⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁"
     ui_print "⣧⡀⠀⠀⠀⠀⠙⠿⠿⠿⠻⠿⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀"
@@ -135,7 +142,6 @@ print_modname() {
     ui_print "⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿"
     ui_print "⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹"
     ui_print ""
-
     ui_print " _______________________________________________"
     ui_print "|                                               |"
     ui_print "|    Utility binaries, bash, pre-configs        |"
