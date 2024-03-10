@@ -1,7 +1,0 @@
-versionsURL="192.168.0.1"
-useSender=true
-atvdetails_interval=300
-atvdetails_receiver_host="192.168.0.1"
-atvdetails_receiver_port="1234"
-mitm="atlas/gc"
-emagiskenable=true
