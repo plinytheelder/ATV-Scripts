@@ -8,9 +8,9 @@ CONFIGFILE='/data/local/tmp/voltorb.config'
 source $CONFIGFILE
 export mitm emagiskenable
 
-# Check if this is a beta or production device
+# Check mitm on this device
 
-check_beta() {    
+check_mitm() {    
     if [ "$(pm list packages de.vahrmap.vmapper)" = "package:de.vahrmap.vmapper" ]; then
         log "Found VMapper production version!"
         VMPKG=de.vahrmap.vmapper
@@ -66,7 +66,7 @@ fi
 
 # Adjust the script depending on Atlas or GC
 
-check_beta
+check_mitm
 
 # Enable playstore
 
