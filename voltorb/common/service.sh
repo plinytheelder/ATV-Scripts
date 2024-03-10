@@ -6,7 +6,7 @@
 # if Magisk change its mount point in the future
 MODDIR=${0%/*}
 
-logfile=/data/local/tmp/emagisk.log
+logfile=/data/local/tmp/voltorb.log
 log() {
     echo "$(date -u +"%Y-%m-%d %H:%M:%S") eMagisk | ${*}" >>$logfile
     /system/bin/log -t eMagisk -p i "${@}"
