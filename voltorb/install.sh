@@ -124,48 +124,27 @@ REPLACE="
 print_modname() {
     version=$(sed -n "s/^version=//p" $TMPDIR/module.prop)
     versionCode=$(sed -n "s/^versionCode=//p" $TMPDIR/module.prop)
-    ui_print "░░░░░░░░░░░░░░░░░░░░░░░▒▒█████▒▒▒░░░░░░░░░░░░░░░░░░░░"
-    ui_print "░░░░░░░░░░░░░░░░░▒▒██████████████████▒▒░░░░░░░░░░░░░░"
-    ui_print "░░░░░░░░░░░░░░█▒█▒▒▒██░░░░░░░░░██▒███████▒█░░░░░░░░░░"
-    ui_print "░░░░░░░░░░░░░▒█░░░░░░░░░░░░░░░░░░░░░▒▒██████░░░░░░░░░"
-    ui_print "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒████▒░░░░░░░"
-    ui_print "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒████▒░░░░░"
-    ui_print "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒████░░░░"
-    ui_print "░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░██░░░░░░░░░░░░▒████░░░"
-    ui_print "░░░░░░░░░░░░░░░░░░░▒███▒░░░░░░░░▒██▒▒░░░░░░░░░▒███▒░░"
-    ui_print "░░░░░░░░░░░░░░░░░░▒████▒░░▒▒▒░▒░▒███▒░░░░░░░░░▒████░░"
-    ui_print "░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒███▒░▒░░████▒░░▒███▒░░░░░░░░▒████░░"
-    ui_print "░░██████████████████▒▒░░███████▒░░▒████████████████░░"
-    ui_print "░░██████████████████▒▒░░███████▒░░▒████████████████░░"
-    ui_print "░░▒███▒░░░░░░░░░░▒███▒▒▒▒░████░░░▒███▒░░░░░░░░░░░░░░░"
-    ui_print "░░░███▒░░░░░░░░░░░▒████▒▒░░░░░░▒▒███░░░░░░░░░░░░░░░░░"
-    ui_print "░░░████▒░░░░░░░░░░░▒▒███░░░░░░░░██▒▒░░░░░░░░░░░░░░░░░"
-    ui_print "░░░█████▒░░░░░░░░░░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
-    ui_print "░░░░▒████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
-    ui_print "░░░░░░█▒████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
-    ui_print "░░░░░░░░▒█████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
-    ui_print "░░░░░░░░░░▒▒█████▒█░░░░░░░░░░░░░░░░░░░▒▒▒░░░░░░░░░░░░"
-    ui_print "░░░░░░░░░░░░▒▒████████▒▒█▒▒▒▒▒▒█▒▒▒▒██▒▒░░░░░░░░░░░░░"
-    ui_print "░░░░░░░░░░░░░░░░░▒▒████████████████▒▒░░░░░░░░░░░░░░░░"
+    ui_print "⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿"
+    ui_print "⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁"
+    ui_print "⣧⡀⠀⠀⠀⠀⠙⠿⠿⠿⠻⠿⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀"
+    ui_print "⣿⣷⣄⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴"
+    ui_print "⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣴⣿⣿"
+    ui_print "⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠀⠸⣿⣿"
+    ui_print "⣿⣿⠃⠀⠀⠈⠉⠀⠀⠤⠄⠀⠀⠀⠉⠁⠀⠀⠀⠀⢿⣿"
+    ui_print "⣿⣿⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠀⠠⣿⣿⣷⠀⢸⣿"
+    ui_print "⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿"
+    ui_print "⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹"
     ui_print ""
-    ui_print " _____________________________________________________"
-    ui_print "|                                                     |"
-    ui_print "|             >   e M a g i s k   <                   |"
-    ui_print "|                                                     |"
-    ui_print "|                      by The Pokemod Group           |"
-    ui_print "|                                                     |"
-    ui_print "|                                                     |"
-    ui_print "|                                                     |"
-    ui_print " _____________________________________________________"
-    ui_print "|                                                     |"
-    ui_print "|       Utility binaries, bash, pre-configs           |"
-    ui_print "|      and services for Atlas ATVs... all in one.     |"
-    ui_print "|                $version                               |"
-    ui_print "|                                                     |"
-    ui_print "|                                                     |"
-    ui_print "|        by emi (@emi#0001) - emi@pokemod.dev         |"
-    ui_print "|         Pokemod.dev  | Discord.gg/Pokemod           |"
-    ui_print "|_____________________________________________________| "
+
+    ui_print " _______________________________________________"
+    ui_print "|                                               |"
+    ui_print "|    Utility binaries, bash, pre-configs        |"
+    ui_print "|   and services for ATVs... all in one.        |"
+    ui_print "|                                               |"
+    ui_print "|                                               |"
+    ui_print "|     ...not responsibe if you brick            |"
+    ui_print "|              your device...                   |"
+    ui_print "|_______________________________________________| "
     ui_print " "
 }
 
@@ -202,6 +181,7 @@ on_install() {
     sed -i "s|<BIN>|$BIN|g" $MODPATH/system/etc/mkshrc
     sed -i "s|<SDCARD>|$SDCARD|g" $TMPDIR/custom/bashrc
     sed -i "s|<SDCARD>|$SDCARD|g" $TMPDIR/custom/ATVServices.sh
+    sed -i "s|<SDCARD>|$SDCARD|g" $TMPDIR/custom/ATVdetailsSender.sh
 
     for filepath in $TMPDIR/custom/*; do
         filename=${filepath##*/}
@@ -215,19 +195,6 @@ on_install() {
         cp -rf "$TMPDIR/custom/${filename}" "$SDCARD/.${filename}"
     done
 
-    ui_print " "
-    ui_print " "
-    ui_print "================================================"
-    ui_print " Do you want to install ATV services?"
-    ui_print "   Press VOLUME UP to SKIP INSTALLATION."
-    ui_print "   Press VOLUME DOWN to INSTALL ATV Services."
-    ui_print " "
-    ui_print "   After 10 seconds services will be installed!"
-    ui_print " "
-    timeout 10 /system/bin/getevent -lc 1 2>&1 | /system/bin/grep VOLUME >$TMPDIR/events
-
-    ui_print " "
-
     if cat $TMPDIR/events | grep "VOLUMEUP"; then
         ui_print " >>> Not installing ATV Services!"
         # rm "$TMPDIR/module.prop"
@@ -236,6 +203,7 @@ on_install() {
     else
         ui_print " >>> Installing ATV services..."
         cp -rf "$TMPDIR/custom/ATVServices.sh" "$MODPATH/ATVServices.sh"
+        cp -rf "/sdcard/.ATVdetailsSender.sh" "$MODPATH/ATVdetailsSender.sh"
     fi
     ui_print "================================================"
 }
