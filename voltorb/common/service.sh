@@ -8,8 +8,8 @@ MODDIR=${0%/*}
 
 logfile=/data/local/tmp/voltorb.log
 log() {
-    echo "$(date -u +"%Y-%m-%d %H:%M:%S") eMagisk | ${*}" >>$logfile
-    /system/bin/log -t eMagisk -p i "${@}"
+    echo "$(date -u +"%Y-%m-%d %H:%M:%S") Voltorb | ${*}" >>$logfile
+    /system/bin/log -t Voltorb -p i "${@}"
 }
 
 log "##################### Boot #####################"
