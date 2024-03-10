@@ -1,7 +1,7 @@
-id=emagisk
-name=eMagisk
-version=v9.6.0
-versionCode=960
-author=emi
+id=voltorb
+name=voltorb
+version=v1.0.0
+versionCode=100
+author=plinytheelder
 description=Installs useful binaries: bash, nano, strace, eventrec and tcpdump. Also optionally installs ATV resources.
 minMagisk=20000
