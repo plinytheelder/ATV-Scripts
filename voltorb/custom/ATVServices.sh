@@ -6,7 +6,7 @@ POGOPKG=com.nianticlabs.pokemongo
 CONFIGFILE='/data/local/tmp/voltorb.config'
 
 source $CONFIGFILE
-export mitm emagiskenable
+export mitm monitoringenable authlimit
 
 # Check mitm on this device
 
@@ -200,7 +200,7 @@ if [ "$monitoringenable" = true ]; then
                 . "$MODDIR/ATVdetailsSender.sh"
 				log "Checking for misbehaving devices"
 				authcount=$(cat /sdcard/vmapper.log | grep Auth | wc -l)
-				if [ $authcount -gt 50 ] ;then
+				if [ $authcount -gt $authlimit ] ;then
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"
 					rm /sdcard/vmapper.log
 					reboot
