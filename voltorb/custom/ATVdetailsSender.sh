@@ -42,7 +42,7 @@ fi
     "deviceName": "${deviceName}",
     "arch": "${arch}",
     "productmodel": "${productmodel}",
-    "emagiskversion": "${emagiskversion}",
+    "voltorbversion": "${voltorbversion}",
     "pogo": "${pogo}",
     "mitmversion": "${mitmversion}",
     "temperature": "${temperature}",
