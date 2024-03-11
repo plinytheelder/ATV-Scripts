@@ -55,13 +55,13 @@ mitm_root() {
 
 
 if [ "$setHostname" = true -a "$mitm" = "vmapper" ] ;then
-        vmDeviceName=$(cat /data/data/de.vahrmap.vmapper/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
-        setprop net.hostname $vmDeviceName
-        log "Set hostname to $vmDeviceName" 
+        DeviceName=$(cat /data/data/de.vahrmap.vmapper/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+        setprop net.hostname $DeviceName
+        log "Set hostname to $DeviceName" 
 elif [ "$setHostname" = true -a "$mitm" = "gc" ] ;then  
-        gcDeviceName=$(cat /data/local/tmp/config.json | tr , '\n' | grep -w 'device_name' | awk -F ":" '{ print $2 }' | tr -d \"})
-        setprop net.hostname $gcDeviceName
-        log "Set hostname to $gcDeviceName"
+        DeviceName=$(cat /data/local/tmp/config.json | tr , '\n' | grep -w 'device_name' | awk -F ":" '{ print $2 }' | tr -d \"})
+        setprop net.hostname $DeviceName
+        log "Set hostname to $DeviceName"
 fi
 
 # Adjust the script depending on Atlas or GC
@@ -202,7 +202,7 @@ if [ "$monitoringenable" = true ]; then
 				authcount=$(cat /sdcard/vmapper.log | grep Auth | wc -l)
 				if [ $authcount -gt $authlimit ] ;then
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"
-     					curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$deviceName'","reboot":"reboot","RPL":"'$atvdetails_interval'"}'
+     					curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$DeviceName'","reboot":"reboot","RPL":"'$atvdetails_interval'"}'
 					rm /sdcard/vmapper.log
 					reboot
 				else
