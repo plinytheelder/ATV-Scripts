@@ -94,9 +94,9 @@ def webhook():
         if 'productmodel' in request.json:
             productmodel = validate_string(request.json["productmodel"]) 
         else: productmodel = None
-        if 'emagiskversion' in request.json:
-            emagiskversion = validate_string(request.json["emagiskversion"]) 
-        else: emagiskversion = None
+        if 'voltorbversion' in request.json:
+            voltorbversion = validate_string(request.json["voltorbversion"]) 
+        else: voltorbversion = None
         if 'pogo' in request.json:
             pogo = validate_string(request.json["pogo"]) 
         else: pogo = None
@@ -149,7 +149,7 @@ def webhook():
                 deviceName, \
                 arch, \
                 productmodel, \
-                emagiskversion, \
+                voltorbversion, \
                 pogo, \
                 mitmversion, \
                 temperature, \
@@ -168,7 +168,7 @@ def webhook():
                 deviceName = VALUES(deviceName), \
                 arch = VALUES(arch), \
                 productmodel = VALUES(productmodel), \
-                emagiskversion = VALUES(emagiskversion), \
+                voltorbversion = VALUES(voltorbversion), \
                 pogo = VALUES(pogo), \
                 mitmversion = VALUES(mitmversion), \
                 temperature = VALUES(temperature), \
@@ -183,7 +183,7 @@ def webhook():
                 rotomUrl = VALUES(rotomUrl), \
                 rotomsecret = VALUES(rotomsecret)"
 
-        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(emagiskversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(proxyinfo), str(token), str(workers), str(rotomUrl), str(rotomsecret) )
+        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(proxyinfo), str(token), str(workers), str(rotomUrl), str(rotomsecret) )
 
         insert_stmt2 = (
             "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature)"
