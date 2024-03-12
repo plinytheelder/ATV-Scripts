@@ -31,7 +31,6 @@ fi
     proxyinfo=$(proxy=$(settings list global | grep "http_proxy=" | awk -F= '{ print $NF }'); [ -z "$proxy" ] || [ "$proxy" = ":0" ] && echo "none" || echo "$proxy")
 # atv performance
 # config
-    token=$(cat $mitm_conf | grep "authid" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
     workers=$(cat $mitm_conf | grep "workers" | awk -F "\"" '{print tolower($4)}')
     rotomUrl=$(cat $mitm_conf | grep "websocketurl" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
 
@@ -52,7 +51,6 @@ fi
     "hostname": "${hostname}",
     "playstore": "${playstore}",
     "proxyinfo": "${proxyinfo}",
-    "token": "${token}",
     "workers": "${workers}",
     "rotomUrl": "${rotomUrl}",
 }
