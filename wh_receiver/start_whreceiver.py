@@ -94,33 +94,36 @@ def webhook():
         if 'productmodel' in request.json:
             productmodel = validate_string(request.json["productmodel"]) 
         else: productmodel = None
+        if 'emagiskversion' in request.json:
+            emagiskversion = validate_string(request.json["emagiskversion"]) 
+        else: emagiskversion = None
         if 'pogo' in request.json:
             pogo = validate_string(request.json["pogo"]) 
         else: pogo = None
-        if 'atlas' in request.json:
-            atlas = validate_string(request.json["atlas"]) 
-        else: atlas = None
+        if 'mitmversion' in request.json:
+            mitmversion = validate_string(request.json["mitmversion"]) 
+        else: mitmversion = None
         if 'temperature' in request.json:
             temperature = validate_string(request.json["temperature"]) 
         else: temperature = None
         if 'magisk' in request.json:
             magisk = validate_string(request.json["magisk"]) 
         else: magisk = None
-        if 'macw' in request.json:
-            macw = validate_string(request.json["macw"]) 
-        else: macw = None
         if 'mace' in request.json:
             mace = validate_string(request.json["mace"]) 
         else: mace = None
         if 'ip' in request.json:
             ip = validate_string(request.json["ip"]) 
-        else: ip = None
-        if 'ext_ip' in request.json:
-            ext_ip = validate_string(request.json["ext_ip"]) 
-        else: ext_ip = None
+        else: ip = None        
         if 'hostname' in request.json:
             hostname = validate_string(request.json["hostname"]) 
-        else: hostname = None
+        else: hostname = None        
+        if 'playstore' in request.json:
+            playstore = validate_string(request.json["playstore"]) 
+        else: playstore = None        
+        if 'proxyinfo' in request.json:
+            proxyinfo = validate_string(request.json["proxyinfo"]) 
+        else: proxyinfo = None
         if 'RPL' in request.json:
             RPL = validate_string(request.json["RPL"]) 
         else: RPL = None
@@ -130,15 +133,15 @@ def webhook():
         if 'token' in request.json:
             token = validate_string(request.json["token"]) 
         else: token = None
-        if 'email' in request.json:
-            email = validate_string(request.json["email"]) 
-        else: email = None
-        if 'rdmUrl' in request.json:
-            rdmUrl = validate_string(request.json["rdmUrl"]) 
-        else: rdmUrl = None
-        if 'onBoot' in request.json:
-            onBoot = validate_string(request.json["onBoot"]) 
-        else: onBoot = None
+        if 'workers' in request.json:
+            workers = validate_string(request.json["workers"]) 
+        else: workers = None
+        if 'rotomUrl' in request.json:
+            rotomUrl = validate_string(request.json["rotomUrl"]) 
+        else: rotomUrl = None
+        if 'rotomsecret' in request.json:
+            rotomsecret = validate_string(request.json["rotomsecret"]) 
+        else: rotomsecret = None
         
         insert_stmt1 = "\
             INSERT INTO ATVsummary \
@@ -146,41 +149,41 @@ def webhook():
                 deviceName, \
                 arch, \
                 productmodel, \
+                emagiskversion, \
                 pogo, \
-                atlas, \
+                mitmversion, \
                 temperature, \
                 magisk, \
-                MACw, \
                 MACe, \
                 ip, \
-                ext_ip, \
                 hostname, \
-                authBearer, \
+                playstore, \
+                proxyinfo, \
                 token, \
-                email, \
-                rdmUrl, \
-                onBoot) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
+                workers, \
+                rotomUrl, \
+                rotomsecret) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
             ON DUPLICATE KEY UPDATE \
                 timestamp = VALUES(timestamp), \
                 deviceName = VALUES(deviceName), \
                 arch = VALUES(arch), \
                 productmodel = VALUES(productmodel), \
+                emagiskversion = VALUES(emagiskversion), \
                 pogo = VALUES(pogo), \
-                atlas = VALUES(atlas), \
+                mitmversion = VALUES(mitmversion), \
                 temperature = VALUES(temperature), \
                 magisk = VALUES(magisk), \
-                MACw = VALUES(MACw), \
                 MACe = VALUES(MACe), \
                 ip = VALUES(ip), \
-                ext_ip = VALUES(ext_ip), \
                 hostname = VALUES(hostname), \
-                authBearer = VALUES(authBearer), \
+                playstore = VALUES(playstore), \
+                proxyinfo = VALUES(proxyinfo), \
                 token = VALUES(token), \
-                email = VALUES(email), \
-                rdmUrl = VALUES(rdmUrl), \
-                onBoot = VALUES(onBoot)"
+                workers = VALUES(workers), \
+                rotomUrl = VALUES(rotomUrl), \
+                rotomsecret = VALUES(rotomsecret)"
 
-        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(pogo), str(atlas), str(temperature), str(magisk), str(macw), str(mace), str(ip), str(ext_ip), str(hostname), str(authBearer), str(token), str(email), str(rdmUrl), str(onBoot) )
+        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(emagiskversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(proxyinfo), str(token), str(workers), str(rotomUrl), str(rotomsecret) )
 
         insert_stmt2 = (
             "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature)"
