@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `ATVstats` (
   `RPL` smallint(6) NOT NULL,
   `deviceName` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `temperature` int(11) DEFAULT NULL,
+  `reboot` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`deviceName`,`timestamp`,`RPL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
