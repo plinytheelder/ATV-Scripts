@@ -199,7 +199,7 @@ if [ "$monitoringenable" = true ]; then
                 log "Sending ATV Details to receiver"
                 . "$MODDIR/ATVdetailsSender.sh"
 				log "Checking for misbehaving devices"
-				authcount=$(cat /sdcard/vmapper.log | grep Auth | wc -l)
+				authcount=$(cat /sdcard/vmapper.log | grep "Auth event 1" | wc -l)
 				if [ $authcount -gt $authlimit ] ;then
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"
      					curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$DeviceName'","reboot":"reboot","RPL":"'$atvdetails_interval'"}'
