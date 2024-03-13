@@ -79,6 +79,7 @@ finally:
 
 ## webhook receiver
 app = Flask(__name__)
+app.debug = True
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -129,19 +130,13 @@ def webhook():
         else: RPL = None
         if 'authBearer' in request.json:
             authBearer = validate_string(request.json["authBearer"]) 
-        else: authBearer = None
-        if 'token' in request.json:
-            token = validate_string(request.json["token"]) 
-        else: token = None
+        else: authBearer = None        
         if 'workers' in request.json:
             workers = validate_string(request.json["workers"]) 
         else: workers = None
         if 'rotomUrl' in request.json:
             rotomUrl = validate_string(request.json["rotomUrl"]) 
         else: rotomUrl = None
-        if 'rotomsecret' in request.json:
-            rotomsecret = validate_string(request.json["rotomsecret"]) 
-        else: rotomsecret = None
         
         insert_stmt1 = "\
             INSERT INTO ATVsummary \
@@ -159,10 +154,8 @@ def webhook():
                 hostname, \
                 playstore, \
                 proxyinfo, \
-                token, \
                 workers, \
-                rotomUrl, \
-                rotomsecret) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
+                rotomUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
             ON DUPLICATE KEY UPDATE \
                 timestamp = VALUES(timestamp), \
                 deviceName = VALUES(deviceName), \
@@ -178,12 +171,10 @@ def webhook():
                 hostname = VALUES(hostname), \
                 playstore = VALUES(playstore), \
                 proxyinfo = VALUES(proxyinfo), \
-                token = VALUES(token), \
                 workers = VALUES(workers), \
-                rotomUrl = VALUES(rotomUrl), \
-                rotomsecret = VALUES(rotomsecret)"
+                rotomUrl = VALUES(rotomUrl)"
 
-        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(proxyinfo), str(token), str(workers), str(rotomUrl), str(rotomsecret) )
+        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(proxyinfo), str(workers), str(rotomUrl) )
 
         insert_stmt2 = (
             "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature)"
