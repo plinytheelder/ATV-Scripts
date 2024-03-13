@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `ATVsummary` (
   `deviceName` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `arch` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `productmodel` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emagiskversion` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `voltorbversion` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pogo` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mitmversion` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `temperature` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
