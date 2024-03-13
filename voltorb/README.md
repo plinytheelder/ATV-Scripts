@@ -34,6 +34,12 @@ vmapper=V15.2.3D
 
 4. Update the `versions` file as needed to keep track of updates.
 
+5. Turn on in config with `monitoringenable=true`
+
+## Health Services
+
+Included with `monitoringenable`, checks log for consecutive failed logins and reboots device. Current default is 10 fails in 15 minutes, but feel free to adjust accordingly.
+
 ## Webhook Stats
 
 To install webhook stats, you have to:
