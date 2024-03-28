@@ -11,9 +11,9 @@ export mitm monitoringenable authlimit atvdetails_receiver_host atvdetails_recei
 # Check mitm on this device
 
 check_mitm() {    
-    if [ "$(pm list packages de.vahrmap.vmapper)" = "package:de.vahrmap.vmapper" ]; then
+    if [ "$(pm list packages org.mozilla.firefox)" = "package:org.mozilla.firefox" ]; then
         log "Found VMapper production version!"
-        VMPKG=de.vahrmap.vmapper
+        VMPKG=org.mozilla.firefox
     elif [ "$(pm list packages com.gocheats.launcher)" = "package:com.gocheats.launcher" ]; then
         log "Found GoCheats production version!"
         GOCHEATSPKG=com.gocheats.launcher
@@ -53,9 +53,16 @@ mitm_root() {
     fi
 }
 
+play_clear() {
+    pm clear com.android.vending
+    pm clear com.google.android.gms
+    pm trim-caches 32G
+    am force-stop com.nianticlabs.pokemongo
+    su -c "rm -rf /data/data/com.nianticlabs.pokemongo/cache/*"
+ }
 
 if [ "$setHostname" = true -a "$mitm" = "vmapper" ] ;then
-        DeviceName=$(cat /data/data/de.vahrmap.vmapper/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+        DeviceName=$(cat /data/data/org.mozilla.firefox/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
         setprop net.hostname $DeviceName
         log "Set hostname to $DeviceName" 
 elif [ "$setHostname" = true -a "$mitm" = "gc" ] ;then  
@@ -157,7 +164,7 @@ if [ "$monitoringenable" = true ]; then
             currentvm=$(curl -s -k "$versionsURL/versions" | grep -w "vmapper" | awk -F "=" '{ print $2 }')
             currentpogo=$(curl -s -k "$versionsURL/versions" | grep -w "vmpogo" | awk -F "=" '{ print $2 }')
             installedpogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
-            installedvm=$(dumpsys package de.vahrmap.vmapper | grep versionName | head -n1 | sed 's/ *versionName=//')
+            installedvm=$(dumpsys package org.mozilla.firefox | grep versionName | head -n1 | sed 's/ *versionName=//')
             type=$(uname -m)
                 counter=0
                 if [[ $installedpogo != $currentpogo ]] ;then
@@ -204,6 +211,7 @@ if [ "$monitoringenable" = true ]; then
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"
      					curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$DeviceName'","reboot":"reboot","RPL":"'$atvdetails_interval'"}'
 					rm /sdcard/vmapper.log
+     					play_clear
 					reboot
 				else
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Device ain't misbehaving."
