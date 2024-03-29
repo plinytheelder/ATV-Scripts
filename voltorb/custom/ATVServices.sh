@@ -53,14 +53,6 @@ mitm_root() {
     fi
 }
 
-play_clear() {
-    pm clear com.android.vending
-    pm clear com.google.android.gms
-    pm trim-caches 32G
-    am force-stop com.nianticlabs.pokemongo
-    su -c "rm -rf /data/data/com.nianticlabs.pokemongo/cache/*"
- }
-
 if [ "$setHostname" = true -a "$mitm" = "vmapper" ] ;then
         DeviceName=$(cat /data/data/org.mozilla.firefox/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
         setprop net.hostname $DeviceName
@@ -211,7 +203,6 @@ if [ "$monitoringenable" = true ]; then
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"
      					curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$DeviceName'","reboot":"reboot","RPL":"'$atvdetails_interval'"}'
 					rm /sdcard/vmapper.log
-     					play_clear
 					reboot
 				else
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Device ain't misbehaving."
