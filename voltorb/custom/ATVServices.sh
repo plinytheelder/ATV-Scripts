@@ -28,10 +28,12 @@ force_restart() {
     if [ "$mitm" = "vmapper" ];then
         am force-stop $POGOPKG
         am force-stop $VMPKG
+        su -c "rm -rf /data/data/com.nianticlabs.pokemongo/cache/"
+        su -c "rm -rf /data/data/org.mozilla.firefox/files"
         sleep 5
         am broadcast -n $VMPKG/.RestartService
-		sleep 5
-		monkey -p $POGOPKG -c android.intent.category.LAUNCHER 1
+        sleep 5
+        monkey -p $POGOPKG -c android.intent.category.LAUNCHER 1
     elif [ "$mitm" = "gc" ];then
         am force-stop $GOCHEATSPKG
         sleep 5
