@@ -30,13 +30,12 @@ force_restart() {
         am force-stop $VMPKG
         su -c "rm -rf /data/data/com.nianticlabs.pokemongo/cache/"
         su -c "rm -rf /data/data/org.mozilla.firefox/files"
-        sleep 5
         am broadcast -n $VMPKG/.RestartService
-        sleep 5
+        sleep 2
         monkey -p $POGOPKG -c android.intent.category.LAUNCHER 1
     elif [ "$mitm" = "gc" ];then
         am force-stop $GOCHEATSPKG
-        sleep 5
+        sleep 2
         monkey -p $GOCHEATSPKG 1
     fi
     log "Services were restarted!"
@@ -202,13 +201,20 @@ if [ "$monitoringenable" = true ]; then
 				log "Checking for misbehaving devices"
 				authcount=$(cat /sdcard/vmapper.log | grep "Auth event 1" | wc -l)
 				if [ $authcount -gt $authlimit ] ;then
-					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"
-     					curl -k -X POST $atvdetails_receiver_host:$atvdetails_receiver_port/reboot -H "Accept: application/json" -H "Content-Type: application/json" -d '{"deviceName":"'$DeviceName'","reboot":"reboot","RPL":"'$atvdetails_interval'"}'
-					rm /sdcard/vmapper.log
-					reboot
+    					if [[ $authcounter -gt 0 ]];then
+						log "Device has made $authcount Failed Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"     						
+						rm /sdcard/vmapper.log
+      						reboot
+     					else
+						log "Device has made $authcount Failed Auth requests in the past $(($atvdetails_interval / 60)) minutes. Restarting Services"     						
+						rm /sdcard/vmapper.log
+      						force_restart
+	    					authcounter=1
+					fi     				
 				else
 					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Device ain't misbehaving."
 					rm /sdcard/vmapper.log
+     					authcounter=0
 				fi
                 sleep $atvdetails_interval
         done
