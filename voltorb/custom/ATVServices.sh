@@ -30,7 +30,7 @@ force_restart() {
         am force-stop $VMPKG
         su -c "rm -rf /data/data/com.nianticlabs.pokemongo/cache/"
         su -c "rm -rf /data/data/org.mozilla.firefox/files"
-        am broadcast -n $VMPKG/.RestartService
+        am broadcast -n $VMPKG/de.vahrmap.vmapper.RestartService
         sleep 2
         monkey -p $POGOPKG -c android.intent.category.LAUNCHER 1
     elif [ "$mitm" = "gc" ];then
