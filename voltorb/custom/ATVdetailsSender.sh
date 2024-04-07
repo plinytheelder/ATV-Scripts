@@ -11,7 +11,7 @@ source $CONFIGFILE
 export useSender atvdetails_interval atvdetails_receiver_host atvdetails_receiver_port
 
 if [ "$useSender" != true ] ;then
-    echo "`date +%Y-%m-%d_%T` ATVdetailsSender: sender stopped" >> $logfile && exit 1
+    echo "`date +%Y-%m-%d_%T` ATVdetailsSender: sender stopped" >> $logfile
 fi
 
 # generic
