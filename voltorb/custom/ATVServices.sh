@@ -196,8 +196,12 @@ if [ "$monitoringenable" = true ]; then
                         log "MITM apps are up to date"
                 fi
                 log "Checking again in $(($atvdetails_interval / 60)) minutes"
-                log "Sending ATV Details to receiver"
-                . "$MODDIR/ATVdetailsSender.sh"
+		if [ "$useSender" != true ] ;then
+                	log "Sending ATV Details to receiver"
+                	. "$MODDIR/ATVdetailsSender.sh"
+		 else
+   			log "ATV Details disabled"
+      		fi
 				log "Checking for misbehaving devices"
 				authcount=$(cat /sdcard/vmapper.log | grep "Auth event 1" | wc -l)
 				if [ $authcount -gt $authlimit ] ;then
