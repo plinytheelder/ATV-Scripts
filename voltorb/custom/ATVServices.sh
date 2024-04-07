@@ -220,5 +220,5 @@ if [ "$monitoringenable" = true ]; then
         done
     )
 else
-        log "eMagisk v$(cat "$MODDIR/version_lock"). Update Services disabled."
+        log "Voltorb v$(cat "$MODDIR/version_lock"). Monitoring Services disabled."
 fi
