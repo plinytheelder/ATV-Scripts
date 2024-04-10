@@ -208,11 +208,17 @@ if [ "$monitoringenable" = true ]; then
     					if [[ $authcounter -gt 0 ]];then
 						log "Device has made $authcount Failed Auth requests in the past $(($atvdetails_interval / 60)) minutes. Rebooting"     						
 						rm /sdcard/vmapper.log
+						pm clear com.android.vending
+						pm clear com.google.android.gms
+						pm trim-caches 32G
       						reboot
      					else
 						log "Device has made $authcount Failed Auth requests in the past $(($atvdetails_interval / 60)) minutes. Restarting Services"     						
 						rm /sdcard/vmapper.log
       						# force_restart
+						pm clear com.android.vending
+						pm clear com.google.android.gms
+						pm trim-caches 32G
       						reboot
 	    					authcounter=1
 					fi     				
