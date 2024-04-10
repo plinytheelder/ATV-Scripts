@@ -196,7 +196,7 @@ if [ "$monitoringenable" = true ]; then
                         log "MITM apps are up to date"
                 fi
                 log "Checking again in $(($atvdetails_interval / 60)) minutes"
-		if [ $useSender != true ] ;then
+		if [ $useSender = true ] ;then
                 	log "Sending ATV Details to receiver"
                 	. "$MODDIR/ATVdetailsSender.sh"
 		 else
