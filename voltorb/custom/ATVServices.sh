@@ -6,7 +6,7 @@ POGOPKG=com.nianticlabs.pokemongo
 CONFIGFILE='/data/local/tmp/voltorb.config'
 
 source $CONFIGFILE
-export mitm monitoringenable authlimit atvdetails_receiver_host atvdetails_receiver_port atvdetails_interval
+export mitm monitoringenable authlimit useSender atvdetails_receiver_host atvdetails_receiver_port atvdetails_interval
 
 # Check mitm on this device
 
@@ -196,7 +196,7 @@ if [ "$monitoringenable" = true ]; then
                         log "MITM apps are up to date"
                 fi
                 log "Checking again in $(($atvdetails_interval / 60)) minutes"
-		if [ "$useSender" != true ] ;then
+		if [ $useSender != true ] ;then
                 	log "Sending ATV Details to receiver"
                 	. "$MODDIR/ATVdetailsSender.sh"
 		 else
@@ -212,11 +212,12 @@ if [ "$monitoringenable" = true ]; then
      					else
 						log "Device has made $authcount Failed Auth requests in the past $(($atvdetails_interval / 60)) minutes. Restarting Services"     						
 						rm /sdcard/vmapper.log
-      						force_restart
+      						# force_restart
+      						reboot
 	    					authcounter=1
 					fi     				
 				else
-					log "Device has made $authcount Auth requests in the past $(($atvdetails_interval / 60)) minutes. Device ain't misbehaving."
+					log "Device has made $authcount Failed Auth requests in the past $(($atvdetails_interval / 60)) minutes. Device ain't misbehaving."
 					rm /sdcard/vmapper.log
      					authcounter=0
 				fi
