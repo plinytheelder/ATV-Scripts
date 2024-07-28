@@ -107,6 +107,18 @@ if [ "$(settings get global stay_on_while_plugged_in)" != 3 ]; then
     settings put global stay_on_while_plugged_in 3
 fi
 
+# Turn off package checks
+
+if [ "$(settings get global verifier_verify_adb_installs)" != 0 ]; then
+    log "Setting Stay On While Plugged In"
+    settings put global verifier_verify_adb_installs 0
+fi
+
+if [ "$(settings get global package_verifier_enable)" != 0 ]; then
+    log "Setting Stay On While Plugged In"
+    settings put global package_verifier_enable 0
+fi
+
 # Start MITM on boot
 
 if [ $mitm = "vmapper" ];then
@@ -163,13 +175,15 @@ if [ "$monitoringenable" = true ]; then
                 if [[ $installedpogo != $currentpogo ]] ;then
                 log "New POGO version detected. Downloading apk." 
                         if [ "$type" = "aarch64" ]; then
-                        curl -o /data/local/tmp/pogo.apk "$versionsURL/vmpogo64.apk" 
+                        curl -o /data/local/tmp/base.apk "$versionsURL/base.apk" 
+                        curl -o /data/local/tmp/split_config.apk "$versionsURL/split_config.arm64_v8a.apk" 
                 else
-                        curl -o /data/local/tmp/pogo.apk "$versionsURL/vmpogo32.apk"
+                        curl -o /data/local/tmp/base.apk "$versionsURL/base.apk"
+                        curl -o /data/local/tmp/split_config.apk "$versionsURL/split_config.armeabi_v7a.apk"
                 fi
                         log "Downloaded POGO (v$currentpogo)"
                         sleep 1
-                        su -c "pm install -g /data/local/tmp/pogo.apk"
+                        su -c "pm install -r /data/local/tmp/base.apk && pm install -p com.nianticlabs.pokemongo -r /data/local/tmp/split_config.apk"
                         log "Installed POGO (v$currentpogo)"
                         counter=$((counter+1))
                         sleep 1
