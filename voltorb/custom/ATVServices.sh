@@ -11,9 +11,9 @@ export mitm monitoringenable authlimit useSender atvdetails_receiver_host atvdet
 # Check mitm on this device
 
 check_mitm() {    
-    if [ "$(pm list packages org.mozilla.firefox)" = "package:org.mozilla.firefox" ]; then
+    if [ "$(pm list packages com.binarybrewing.calculator)" = "package:com.binarybrewing.calculator" ]; then
         log "Found VMapper production version!"
-        VMPKG=org.mozilla.firefox
+        VMPKG=com.binarybrewing.calculator
     elif [ "$(pm list packages com.gocheats.launcher)" = "package:com.gocheats.launcher" ]; then
         log "Found GoCheats production version!"
         GOCHEATSPKG=com.gocheats.launcher
@@ -29,7 +29,7 @@ force_restart() {
         am force-stop $POGOPKG
         am force-stop $VMPKG
         su -c "rm -rf /data/data/com.nianticlabs.pokemongo/cache/"
-        su -c "rm -rf /data/data/org.mozilla.firefox/files"
+        su -c "rm -rf /data/data/com.binarybrewing.calculator/files"
         am broadcast -n $VMPKG/de.vahrmap.vmapper.RestartService --ez autostart true
         sleep 2
         monkey -p $POGOPKG -c android.intent.category.LAUNCHER 1
@@ -55,7 +55,7 @@ mitm_root() {
 }
 
 if [ "$setHostname" = true -a "$mitm" = "vmapper" ] ;then
-        DeviceName=$(cat /data/data/org.mozilla.firefox/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+        DeviceName=$(cat /data/data/com.binarybrewing.calculator/shared_prefs/config.xml | grep "origin" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
         setprop net.hostname $DeviceName
         log "Set hostname to $DeviceName" 
 elif [ "$setHostname" = true -a "$mitm" = "gc" ] ;then  
@@ -169,7 +169,7 @@ if [ "$monitoringenable" = true ]; then
             currentvm=$(curl -s -k "$versionsURL/versions" | grep -w "vmapper" | awk -F "=" '{ print $2 }')
             currentpogo=$(curl -s -k "$versionsURL/versions" | grep -w "vmpogo" | awk -F "=" '{ print $2 }')
             installedpogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
-            installedvm=$(dumpsys package org.mozilla.firefox | grep versionName | head -n1 | sed 's/ *versionName=//')
+            installedvm=$(dumpsys package com.binarybrewing.calculator | grep versionName | head -n1 | sed 's/ *versionName=//')
             type=$(uname -m)
                 counter=0
                 if [[ $installedpogo != $currentpogo ]] ;then
