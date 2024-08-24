@@ -5,7 +5,7 @@ CONFIGFILE='/data/local/tmp/voltorb.config'
 logfile='/data/local/tmp/voltorb.log'
 
 #Configs
-mitm_conf="/data/data/org.mozilla.firefox/shared_prefs/config.xml"
+mitm_conf="/data/data/com.binarybrewing.calculator/shared_prefs/config.xml"
 
 source $CONFIGFILE
 export useSender atvdetails_interval atvdetails_receiver_host atvdetails_receiver_port
@@ -21,7 +21,7 @@ fi
     productmodel=$(getprop ro.product.model)
     voltorbversion=$(cat "$MODDIR/version_lock" || echo 'na')
     pogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
-    mitmversion=$(dumpsys package org.mozilla.firefox | grep versionName | head -n1 | sed 's/ *versionName=//')
+    mitmversion=$(dumpsys package com.binarybrewing.calculator | grep versionName | head -n1 | sed 's/ *versionName=//')
     temperature=$(cat /sys/class/thermal/thermal_zone0/temp | cut -c -2)
     magisk=$(magisk -c | sed 's/:.*//')
     mace=$(ifconfig eth0 |grep 'HWaddr' |awk '{ print ($NF) }')
