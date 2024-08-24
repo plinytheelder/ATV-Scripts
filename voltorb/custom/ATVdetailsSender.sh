@@ -6,6 +6,7 @@ logfile='/data/local/tmp/voltorb.log'
 
 #Configs
 mitm_conf="/data/data/com.binarybrewing.calculator/shared_prefs/config.xml"
+mitm_store="/data/data/com.binarybrewing.calculator/shared_prefs/store.xml"
 
 source $CONFIGFILE
 export useSender atvdetails_interval atvdetails_receiver_host atvdetails_receiver_port
@@ -29,6 +30,8 @@ fi
     hostname=$(getprop net.hostname)
     playstore=$(dumpsys package com.android.vending | grep versionName | head -n 1 | cut -d "=" -f 2 | cut -d " " -f 1)
     proxyinfo=$(proxy=$(settings list global | grep "http_proxy=" | awk -F= '{ print $NF }'); [ -z "$proxy" ] || [ "$proxy" = ":0" ] && echo "none" || echo "$proxy")
+    pifversion=$([ -f /data/adb/modules/playintegrityfix/module.prop ] && head -3 /data/adb/modules/playintegrityfix/module.prop | grep 'version=' | cut -c 10-13 || echo 'na')
+    pifstatus=$(su -c cat $mitm_store | grep 'playIntegrityStatus' | awk -F'[<>]' '{print $3}')
 # atv performance
 # config
     workers=$(su -c cat $mitm_conf | grep "workers" | awk -F "\"" '{print tolower($4)}' || echo 'na')
@@ -51,6 +54,8 @@ fi
     "hostname": "${hostname}",
     "playstore": "${playstore}",
     "proxyinfo": "${proxyinfo}",
+    "pifversion": "${pifversion}",
+    "pifstatus": "${pifstatus}",
     "workers": "${workers}",
     "rotomUrl": "${rotomUrl}"
 }
