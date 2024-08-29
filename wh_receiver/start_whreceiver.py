@@ -121,7 +121,13 @@ def webhook():
         else: hostname = None        
         if 'playstore' in request.json:
             playstore = validate_string(request.json["playstore"]) 
-        else: playstore = None        
+        else: playstore = None       
+        if 'pifversion' in request.json:
+            pifversion = validate_string(request.json["pifversion"]) 
+        else: pifversion = None       
+        if 'pifstatus' in request.json:
+            pifstatus = validate_string(request.json["pifstatus"]) 
+        else: pifstatus = None        
         if 'proxyinfo' in request.json:
             proxyinfo = validate_string(request.json["proxyinfo"]) 
         else: proxyinfo = None
@@ -153,6 +159,8 @@ def webhook():
                 ip, \
                 hostname, \
                 playstore, \
+                pifversion, \
+                pifstatus, \
                 proxyinfo, \
                 workers, \
                 rotomUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
@@ -170,11 +178,13 @@ def webhook():
                 ip = VALUES(ip), \
                 hostname = VALUES(hostname), \
                 playstore = VALUES(playstore), \
+                pifversion = VALUES(pifversion), \
+                pifstatus = VALUES(pifstatus), \
                 proxyinfo = VALUES(proxyinfo), \
                 workers = VALUES(workers), \
                 rotomUrl = VALUES(rotomUrl)"
 
-        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(proxyinfo), str(workers), str(rotomUrl) )
+        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(pifversion), str(pifstatus), str(proxyinfo), str(workers), str(rotomUrl) )
 
         insert_stmt2 = (
             "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature)"
