@@ -163,7 +163,7 @@ def webhook():
                 pifstatus, \
                 proxyinfo, \
                 workers, \
-                rotomUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
+                rotomUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
             ON DUPLICATE KEY UPDATE \
                 timestamp = VALUES(timestamp), \
                 deviceName = VALUES(deviceName), \
