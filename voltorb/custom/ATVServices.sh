@@ -169,6 +169,7 @@ if [ "$monitoringenable" = true ]; then
             currentvm=$(curl -s -k "$versionsURL/versions" | grep -w "vmapper" | awk -F "=" '{ print $2 }')
             currentpogo=$(curl -s -k "$versionsURL/versions" | grep -w "vmpogo" | awk -F "=" '{ print $2 }')
             installedpogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
+            installeddummy=$(dumpsys package com.nianticlabs.pokemongo.ares | grep versionName | head -n1 | sed 's/ *versionName=//')
             installedvm=$(dumpsys package com.binarybrewing.calculator | grep versionName | head -n1 | sed 's/ *versionName=//')
             type=$(uname -m)
                 counter=0
@@ -209,6 +210,26 @@ if [ "$monitoringenable" = true ]; then
                 else
                         log "MITM apps are up to date"
                 fi
+
+  		if [[ $installeddummy = $currentvm ]] ;then
+					log "Current Dummy (v$installedvm installed)"
+                else 
+					log "New Dummy version detected. Downloading apk."
+                    curl -o /data/local/tmp/dummy.apk "$versionsURL/dummy.apk"
+                    log "Downloaded Dummy (v$currentvm)"
+                    su -c "pm install -g /data/local/tmp/dummy.apk"
+                    log "Installed Dummy (v$currentvm)"
+                    counter=$((counter+1))
+                    sleep 1
+                fi
+                if [[ $counter != 0 ]] ;then
+                        log "$counter apps updated detected. Restarting Vmapper Services"
+                        mitm_root
+                        force_restart
+                else
+                        log "MITM apps are up to date"
+                fi
+		
                 log "Checking again in $(($atvdetails_interval / 60)) minutes"
 		if [ $useSender = true ] ;then
                 	log "Sending ATV Details to receiver"
