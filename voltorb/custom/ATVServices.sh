@@ -203,15 +203,7 @@ if [ "$monitoringenable" = true ]; then
                     counter=$((counter+1))
                     sleep 1
                 fi
-                if [[ $counter != 0 ]] ;then
-                        log "$counter apps updated detected. Restarting Vmapper Services"
-                        mitm_root
-                        force_restart
-                else
-                        log "MITM apps are up to date"
-                fi
-
-  		if [[ $installeddummy = $currentvm ]] ;then
+		if [[ $installeddummy = $currentvm ]] ;then
 					log "Current Dummy (v$installedvm installed)"
                 else 
 					log "New Dummy version detected. Downloading apk."
