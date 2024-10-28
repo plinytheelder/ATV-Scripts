@@ -101,6 +101,9 @@ def webhook():
         if 'pogo' in request.json:
             pogo = validate_string(request.json["pogo"]) 
         else: pogo = None
+        if 'dummy' in request.json:
+            dummy = validate_string(request.json["dummy"]) 
+        else: dummy = None
         if 'mitmversion' in request.json:
             mitmversion = validate_string(request.json["mitmversion"]) 
         else: mitmversion = None
@@ -152,6 +155,7 @@ def webhook():
                 productmodel, \
                 voltorbversion, \
                 pogo, \
+                dummy, \
                 mitmversion, \
                 temperature, \
                 magisk, \
@@ -163,7 +167,7 @@ def webhook():
                 pifstatus, \
                 proxyinfo, \
                 workers, \
-                rotomUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
+                rotomUrl) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \
             ON DUPLICATE KEY UPDATE \
                 timestamp = VALUES(timestamp), \
                 deviceName = VALUES(deviceName), \
@@ -171,6 +175,7 @@ def webhook():
                 productmodel = VALUES(productmodel), \
                 voltorbversion = VALUES(voltorbversion), \
                 pogo = VALUES(pogo), \
+                dummy = VALUES(dummy), \
                 mitmversion = VALUES(mitmversion), \
                 temperature = VALUES(temperature), \
                 magisk = VALUES(magisk), \
@@ -184,7 +189,7 @@ def webhook():
                 workers = VALUES(workers), \
                 rotomUrl = VALUES(rotomUrl)"
 
-        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(pifversion), str(pifstatus), str(proxyinfo), str(workers), str(rotomUrl) )
+        data1 = (str(timestamp), str(deviceName), str(arch), str(productmodel), str(voltorbversion), str(pogo), str(dummy), str(mitmversion), str(temperature), str(magisk), str(mace), str(ip), str(hostname), str(playstore), str(pifversion), str(pifstatus), str(proxyinfo), str(workers), str(rotomUrl) )
 
         insert_stmt2 = (
             "INSERT INTO ATVstats (timestamp, RPL, deviceName, temperature)"
