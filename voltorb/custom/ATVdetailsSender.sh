@@ -22,6 +22,7 @@ fi
     productmodel=$(getprop ro.product.model)
     voltorbversion=$(cat "$MODDIR/version_lock" || echo 'na')
     pogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
+    dummy=$(dumpsys package com.nianticlabs.pokemongo.ares | grep versionName | head -n1 | sed 's/ *versionName=//')
     mitmversion=$(dumpsys package com.binarybrewing.calculator | grep versionName | head -n1 | sed 's/ *versionName=//')
     temperature=$(cat /sys/class/thermal/thermal_zone0/temp | cut -c -2)
     magisk=$(magisk -c | sed 's/:.*//')
@@ -46,6 +47,7 @@ fi
     "productmodel": "${productmodel}",
     "voltorbversion": "${voltorbversion}",
     "pogo": "${pogo}",
+    "dummy": "${dummy}",
     "mitmversion": "${mitmversion}",
     "temperature": "${temperature}",
     "magisk": "${magisk}",
