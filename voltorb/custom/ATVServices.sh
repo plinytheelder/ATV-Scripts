@@ -167,6 +167,7 @@ if [ "$monitoringenable" = true ]; then
         log "Starting update check service every $(($atvdetails_interval / 60)) minutes..."
         while :; do
             currentvm=$(curl -s -k "$versionsURL/versions" | grep -w "vmapper" | awk -F "=" '{ print $2 }')
+            currentdummy=$(curl -s -k "$versionsURL/versions" | grep -w "dummy" | awk -F "=" '{ print $2 }')
             currentpogo=$(curl -s -k "$versionsURL/versions" | grep -w "vmpogo" | awk -F "=" '{ print $2 }')
             installedpogo=$(dumpsys package com.nianticlabs.pokemongo | grep versionName | head -n1 | sed 's/ *versionName=//')
             installeddummy=$(dumpsys package com.nianticlabs.pokemongo.ares | grep versionName | head -n1 | sed 's/ *versionName=//')
@@ -203,14 +204,14 @@ if [ "$monitoringenable" = true ]; then
                     counter=$((counter+1))
                     sleep 1
                 fi
-		if [[ $installeddummy = $currentvm ]] ;then
-					log "Current Dummy (v$installedvm installed)"
+		if [[ $installeddummy = $currentdummy ]] ;then
+					log "Current Dummy (v$installeddummy installed)"
                 else 
 					log "New Dummy version detected. Downloading apk."
                     curl -o /data/local/tmp/dummy.apk "$versionsURL/dummy.apk"
-                    log "Downloaded Dummy (v$currentvm)"
+                    log "Downloaded Dummy (v$currentdummy)"
                     su -c "pm install -g /data/local/tmp/dummy.apk"
-                    log "Installed Dummy (v$currentvm)"
+                    log "Installed Dummy (v$currentdummy)"
                     counter=$((counter+1))
                     sleep 1
                 fi
